@@ -59,7 +59,6 @@ return packer.startup(function(use)
 	use("goolord/alpha-nvim")
 	use("folke/which-key.nvim")
   use('fatih/vim-go')
-
 	-- Colorschemes
 	use("folke/tokyonight.nvim")
 	use("lunarvim/darkplus.nvim")
@@ -79,7 +78,7 @@ return packer.startup(function(use)
 	-- LSP
 	use("neovim/nvim-lspconfig") -- enable LSP
 	use("williamboman/nvim-lsp-installer") -- simple to use language server installer
-	--use({ "jose-elias-alvarez/null-ls.nvim"}) -- for formatters and linters
+	use({ "jose-elias-alvarez/null-ls.nvim"}) -- for formatters and linters
 
 	-- Telescope
 	use("nvim-telescope/telescope.nvim")

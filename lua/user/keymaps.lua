@@ -11,6 +11,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Modes
+--   map_mode = "",
 --   normal_mode = "n",
 --   insert_mode = "i",
 --   visual_mode = "v",
