@@ -9,8 +9,8 @@ bufferline.setup {
       numbers = "none",-- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
       close_command = "Bdelete! %d",       -- can be a string | function, see "Mouse actions"
       right_mouse_command = nil, -- can be a string | function, see "Mouse actions"
-      left_mouse_command = "Buffer %d",    -- can be a string | function, see "Mouse actions"
-      middle_mouse_command = "vertical sbuffer %d",          -- can be a string | function, see "Mouse actions"
+      left_mouse_command = nil,    -- can be a string | function, see "Mouse actions"
+      middle_mouse_command = nil,          -- can be a string | function, see "Mouse actions"
       indicator = {
           icon = '▎', -- this should be omitted if indicator style is not 'icon'
           style = 'icon' --'icon' | 'underline' | 'none',
