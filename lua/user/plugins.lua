@@ -58,9 +58,10 @@ return packer.startup(function(use)
 	use("lukas-reineke/indent-blankline.nvim")
 	use("goolord/alpha-nvim")
 	use("folke/which-key.nvim")
-  use('fatih/vim-go')
-  use('tpope/vim-fugitive')
-  use('tpope/vim-rhubarb')
+	use("fatih/vim-go")
+	use("tpope/vim-fugitive")
+	use("tpope/vim-rhubarb")
+	use({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim" })
 	-- Colorschemes
 	use("folke/tokyonight.nvim")
 	use("lunarvim/darkplus.nvim")
@@ -80,7 +81,7 @@ return packer.startup(function(use)
 	-- LSP
 	use("neovim/nvim-lspconfig") -- enable LSP
 	use("williamboman/nvim-lsp-installer") -- simple to use language server installer
-	use({ "jose-elias-alvarez/null-ls.nvim"}) -- for formatters and linters
+	use({ "jose-elias-alvarez/null-ls.nvim" }) -- for formatters and linters
 
 	-- Telescope
 	use("nvim-telescope/telescope.nvim")
@@ -89,7 +90,7 @@ return packer.startup(function(use)
 	use("nvim-treesitter/nvim-treesitter")
 
 	-- Git doesn't work well need a better one
-	 use("lewis6991/gitsigns.nvim" )
+	use("lewis6991/gitsigns.nvim")
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
