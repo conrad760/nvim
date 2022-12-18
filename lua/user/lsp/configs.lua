@@ -13,9 +13,9 @@ local servers = {
 "grammarly",
 "jsonls",
 "pyright",
-"remark_ls",
 "rust_analyzer",
 "sumneko_lua",
+"marksman",
 }
 
 lsp_installer.setup({
