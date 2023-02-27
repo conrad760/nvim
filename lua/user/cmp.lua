@@ -110,6 +110,7 @@ cmp.setup {
     end,
   },
   sources = {
+    {name = "vim-dadbod-completion"},
     { name = "nvim_lsp" },
     { name = "luasnip" },
     { name = "buffer" },

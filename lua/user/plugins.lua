@@ -89,8 +89,14 @@ return packer.startup(function(use)
 	-- Treesitter
 	use("nvim-treesitter/nvim-treesitter")
 
-	-- Git doesn't work well need a better one
+	-- Git
 	use("lewis6991/gitsigns.nvim")
+
+  -- Databases
+  use("tpope/vim-dadbod")
+  use("kristijanhusak/vim-dadbod-ui")
+  use("kristijanhusak/vim-dadbod-completion")
+
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
