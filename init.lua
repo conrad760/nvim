@@ -20,3 +20,5 @@ require("user.whichkey")
 require("user.autocommands")
 require("user.neogit")
 require("user.dadbod")
+require("user.chatgpt") -- in zshrc add [ -f "$HOME/.config/.openai_key.zsh" ] && source "$HOME/.config/.openai_key.zsh"
+ 

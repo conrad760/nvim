@@ -98,6 +98,10 @@ keymap("x", "<leader>/", '<ESC><CMD>lua require("Comment.api").toggle_linewise_o
 -- DB / Dadbod
 keymap("n", "<leader>d", ":DBUIToggle<CR>", opts)
 
+-- ChatGPT
+keymap("n", "<leader>tk", "<cmd>:ChatGPT<cr>", opts)
+keymap("n", "<leader>tj", "<cmd>:ChatGPTActAs<cr>", opts)
+keymap("n", "<leader>tt", "<cmd>:ChatGPTEditWithInstructions<cr>", opts)
 
 ---- DAP
 --keymap("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", opts)
