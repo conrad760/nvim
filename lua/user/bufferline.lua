@@ -61,7 +61,7 @@ bufferline.setup {
       color_icons = true, -- | false, -- whether or not to add the filetype icon highlights
       show_buffer_icons = true, -- | false, -- disable filetype icons for buffers
       show_buffer_close_icons = true, -- | false,
-      show_buffer_default_icon = true, -- | false, -- whether or not an unrecognised filetype should show a default icon
+      -- show_buffer_default_icon = true, -- | false, -- whether or not an unrecognised filetype should show a default icon
       show_close_icon = true, -- | false,
       show_tab_indicators = true, -- | false,
       show_duplicate_prefix = true, -- | false, -- whether to show duplicate buffer prefix

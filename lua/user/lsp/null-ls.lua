@@ -14,6 +14,7 @@ null_ls.setup({
     require("null-ls").builtins.formatting.stylua,
     require("null-ls").builtins.diagnostics.eslint,
     require("null-ls").builtins.completion.spell,
+--    require("null-ls").builtins.diagnostics.revive, -- this is great but I need a better config
 		formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
 		formatting.stylua,
     diagnostics.flake8
