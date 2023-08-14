@@ -24,3 +24,4 @@ require("user.dadbod")
 require("user.tagbar")
 
 -- require("user.chatgpt") -- in zshrc add [ -f "$HOME/.config/.openai_key.zsh" ] && source "$HOME/.config/.openai_key.zsh"
+ 
