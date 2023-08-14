@@ -229,6 +229,11 @@ _G.packer_plugins = {
     path = "/Users/conrad/.local/share/nvim/site/pack/packer/start/project.nvim",
     url = "https://github.com/ahmedkhalf/project.nvim"
   },
+  tagbar = {
+    loaded = true,
+    path = "/Users/conrad/.local/share/nvim/site/pack/packer/start/tagbar",
+    url = "https://github.com/preservim/tagbar"
+  },
   ["telescope.nvim"] = {
     loaded = true,
     path = "/Users/conrad/.local/share/nvim/site/pack/packer/start/telescope.nvim",
@@ -283,6 +288,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/conrad/.local/share/nvim/site/pack/packer/start/vim-tmux-navigator",
     url = "https://github.com/christoomey/vim-tmux-navigator"
+  },
+  ["vim-unimpaired"] = {
+    loaded = true,
+    path = "/Users/conrad/.local/share/nvim/site/pack/packer/start/vim-unimpaired",
+    url = "https://github.com/tpope/vim-unimpaired"
   },
   ["which-key.nvim"] = {
     loaded = true,

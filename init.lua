@@ -1,5 +1,6 @@
 require("user.options")
 require("user.keymaps")
+require("user.tagbar")
 require("user.plugins")
 require("user.colorscheme")
 require("user.cmp")
@@ -20,5 +21,6 @@ require("user.whichkey")
 require("user.autocommands")
 require("user.neogit")
 require("user.dadbod")
-require("user.chatgpt") -- in zshrc add [ -f "$HOME/.config/.openai_key.zsh" ] && source "$HOME/.config/.openai_key.zsh"
- 
+require("user.tagbar")
+
+-- require("user.chatgpt") -- in zshrc add [ -f "$HOME/.config/.openai_key.zsh" ] && source "$HOME/.config/.openai_key.zsh"
