@@ -95,6 +95,17 @@ return packer.startup(function(use)
   use("rhysd/committia.vim")
 	use("tpope/vim-fugitive")
   use("tpope/vim-unimpaired")
+use {
+  'pwntester/octo.nvim',
+  requires = {
+    'nvim-lua/plenary.nvim',
+    'nvim-telescope/telescope.nvim',
+    'nvim-tree/nvim-web-devicons',
+  },
+  config = function ()
+    require"octo".setup()
+  end
+}
 
   -- Databases
   use("tpope/vim-dadbod")
