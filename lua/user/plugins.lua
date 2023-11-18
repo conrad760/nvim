@@ -78,6 +78,7 @@ return packer.startup(function(use)
 	-- snippets
 	use("L3MON4D3/LuaSnip") --snippet engine
 	use("rafamadriz/friendly-snippets") -- a bunch of snippets to use
+  use("nicwest/vim-camelsnek")
 
 	-- LSP
 	use("neovim/nvim-lspconfig") -- enable LSP
@@ -95,7 +96,7 @@ return packer.startup(function(use)
   use("rhysd/committia.vim")
 	use("tpope/vim-fugitive")
   use("tpope/vim-unimpaired")
-use {
+  use {
   'pwntester/octo.nvim',
   requires = {
     'nvim-lua/plenary.nvim',
@@ -105,26 +106,28 @@ use {
   config = function ()
     require"octo".setup()
   end
-}
+  }
 
   -- Databases
   use("tpope/vim-dadbod")
   use("kristijanhusak/vim-dadbod-ui")
   use("kristijanhusak/vim-dadbod-completion")
 
-  -- AI
-  use({"jackMort/ChatGPT.nvim",
-requires = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim"
-    }
-})
+  -- -- AI
+  -- use({"jackMort/ChatGPT.nvim",
+  -- requires = {
+  --     "MunifTanjim/nui.nvim",
+  --     "nvim-lua/plenary.nvim",
+  --     "nvim-telescope/telescope.nvim"
+  --   }
+  -- })
 
-use({
+  -- markdown
+  use({
     "iamcco/markdown-preview.nvim",
     run = function() vim.fn["mkdp#util#install"]() end,
-})
+  })
+
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
 	if PACKER_BOOTSTRAP then
