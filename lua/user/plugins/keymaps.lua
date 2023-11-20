@@ -22,8 +22,8 @@ vim.g.maplocalleader = " "
 -- Normal --
 --
 -- Clear search highlights.
-keymap("", "<Leader><Space>", ":let @/=''<CR>",opts)
-keymap("", "<leader>o",":setlocal spell! spelllang=en_us<CR>",opts)
+keymap("", "<Leader><Space>", ":let @/=''<CR>", opts)
+keymap("", "<leader>o", ":setlocal spell! spelllang=en_us<CR>", opts)
 
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
@@ -44,14 +44,14 @@ keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
 
 -- Insert --
--- Press jk fast to exit insert mode 
+-- Press jk fast to exit insert mode
 keymap("i", "jk", "<ESC>", opts)
 keymap("i", "kj", "<ESC>", opts)
 
 -- Visual --
 -- Stay in indent mode
-keymap("v", "<", "<gv", opts)
-keymap("v", ">", ">gv", opts)
+keymap("v", "<<", "<gv", opts)
+keymap("v", ">>", ">gv", opts)
 
 -- Move text up and down
 keymap("v", "<A-j>", ":m .+1<CR>==", opts)
@@ -71,12 +71,12 @@ keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
 -- Terminal --
 -- Better terminal navigation
- keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
- keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
- keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
- keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
+keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
+keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
+keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
+keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
- -- -- Plugins --
+-- -- Plugins --
 
 -- NvimTree
 keymap("n", "<leader>n", ":NvimTreeToggle<CR>", opts)
@@ -84,6 +84,7 @@ keymap("n", "<leader>n", ":NvimTreeToggle<CR>", opts)
 -- Telescope
 keymap("n", "<leader>ff", ":Telescope find_files<CR>", opts)
 keymap("n", "<leader>ft", ":Telescope live_grep<CR>", opts)
+keymap("n", "<leader>fo", ":Telescope oldfiles<CR>", opts)
 keymap("n", "<leader>fp", ":Telescope projects<CR>", opts)
 keymap("n", "<leader>fb", ":Telescope buffers<CR>", opts)
 
@@ -112,3 +113,10 @@ keymap("n", "<leader>tt", "<cmd>:ChatGPTEditWithInstructions<cr>", opts)
 --keymap("n", "<leader>dl", "<cmd>lua require'dap'.run_last()<cr>", opts)
 --keymap("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>", opts)
 --keymap("n", "<leader>dt", "<cmd>lua require'dap'.terminate()<cr>", opts)
+
+-- Luasnip
+keymap("i", "<C-n>", "<Plug>luasnip-next-choice", opts)
+keymap("s", "<C-n>", "<Plug>luasnip-next-choice", opts)
+keymap("i", "<C-p>", "<Plug>luasnip-prev-choice", opts)
+keymap("s", "<C-p>", "<Plug>luasnip-prev-choice", opts)
+keymap("n", "<leader><leader>s", "<cmd>source ~/.config/nvim/lua/user/plugins/luasnip.lua<CR>", opts)

@@ -76,7 +76,7 @@ return packer.startup(function(use)
 	use("saadparwaiz1/cmp_luasnip") -- snippet completions
 
 	-- snippets
-	use("L3MON4D3/LuaSnip") --snippet engine
+  use { "L3MON4D3/LuaSnip", run = "make install_jsregexp" }
 	use("rafamadriz/friendly-snippets") -- a bunch of snippets to use
   use("nicwest/vim-camelsnek")
 
