@@ -8,6 +8,11 @@ if not snip_status_ok then
   return
 end
 
+local cmp_git_status_ok, git = pcall(require, "cmp_git")
+if not cmp_git_status_ok then
+  return
+end
+
 local check_backspace = function()
   local col = vim.fn.col "." - 1
   return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
@@ -103,6 +108,7 @@ cmp.setup {
         luasnip = "[Snip]",
         buffer = "[Buff]",
         path = "[Path]",
+        git = "git"
       })[entry.source.name]
       return vim_item
     end,
@@ -111,7 +117,8 @@ cmp.setup {
     {name = "vim-dadbod-completion"},
     { name = "nvim_lsp" },
     { name = "luasnip" },
-    { name = "buffer", max_item_count=3, keyword_length =5 },
+    { name = "git" },
+    { name = "buffer", max_item_count = 3, keyword_length = 5 },
     { name = "path" },
   },
   confirm_opts = {

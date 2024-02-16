@@ -73,6 +73,7 @@ return packer.startup(function(use)
 	use("hrsh7th/cmp-buffer") -- buffer completions
 	use("hrsh7th/cmp-path") -- path completions
 	use("hrsh7th/cmp-cmdline") -- buffer completions
+  use({"petertriho/cmp-git", requires = "nvim-lua/plenary.nvim"})
 	use("saadparwaiz1/cmp_luasnip") -- snippet completions
 
 	-- snippets
