@@ -16,6 +16,7 @@ local servers = {
 "rust_analyzer",
 "lua_ls",
 "marksman",
+"templ",
 }
 
 lsp_installer.setup({

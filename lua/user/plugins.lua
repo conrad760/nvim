@@ -75,6 +75,7 @@ return packer.startup(function(use)
 	use("hrsh7th/cmp-cmdline") -- buffer completions
   use({"petertriho/cmp-git", requires = "nvim-lua/plenary.nvim"})
 	use("saadparwaiz1/cmp_luasnip") -- snippet completions
+  use("joerdav/templ.vim")
 
 	-- snippets
   use { "L3MON4D3/LuaSnip", run = "make install_jsregexp" }
@@ -93,6 +94,14 @@ return packer.startup(function(use)
 	use("nvim-treesitter/nvim-treesitter")
 
 	-- Git
+use {
+  'pwntester/octo.nvim',
+  requires = {
+    'nvim-lua/plenary.nvim',
+    'nvim-telescope/telescope.nvim',
+    'nvim-tree/nvim-web-devicons',
+  }
+}
 	use("lewis6991/gitsigns.nvim")
   use("rhysd/committia.vim")
 	use("tpope/vim-fugitive")
