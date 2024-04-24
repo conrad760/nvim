@@ -96,23 +96,25 @@ keymap("n", "<leader>/", "<cmd>lua require('Comment.api').toggle_current_linewis
 keymap("x", "<leader>/", '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>', opts)
 
 -- DB / Dadbod
-keymap("n", "<leader>d", ":DBUIToggle<CR>", opts)
+keymap("n", "<leader>dad", ":DBUIToggle<CR>", opts)
 
 -- ChatGPT
 keymap("n", "<leader>tk", "<cmd>:ChatGPT<cr>", opts)
 keymap("n", "<leader>tj", "<cmd>:ChatGPTActAs<cr>", opts)
 keymap("n", "<leader>tt", "<cmd>:ChatGPTEditWithInstructions<cr>", opts)
 
----- DAP
---keymap("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", opts)
---keymap("n", "<leader>dc", "<cmd>lua require'dap'.continue()<cr>", opts)
---keymap("n", "<leader>di", "<cmd>lua require'dap'.step_into()<cr>", opts)
---keymap("n", "<leader>do", "<cmd>lua require'dap'.step_over()<cr>", opts)
---keymap("n", "<leader>dO", "<cmd>lua require'dap'.step_out()<cr>", opts)
---keymap("n", "<leader>dr", "<cmd>lua require'dap'.repl.toggle()<cr>", opts)
---keymap("n", "<leader>dl", "<cmd>lua require'dap'.run_last()<cr>", opts)
---keymap("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>", opts)
---keymap("n", "<leader>dt", "<cmd>lua require'dap'.terminate()<cr>", opts)
+-- DAP
+-- 
+keymap("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", opts)
+keymap("n", "<leader>dc", "<cmd>lua require'dap'.continue()<cr>", opts)
+keymap("n", "<leader>di", "<cmd>lua require'dap'.step_into()<cr>", opts)
+keymap("n", "<leader>do", "<cmd>lua require'dap'.step_over()<cr>", opts)
+keymap("n", "<leader>dO", "<cmd>lua require'dap'.step_out()<cr>", opts)
+keymap("n", "<leader>dr", "<cmd>lua require'dap'.repl.toggle()<cr>", opts)
+keymap("n", "<leader>dl", "<cmd>lua require'dap'.run_last()<cr>", opts)
+keymap("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>", opts)
+keymap("n", "<leader>ds", "<cmd>lua require'dap'.terminate()<cr>", opts)
+keymap("n", "<leader>dt", "<cmd>lua require'dap-go'.debug_test()<cr>", opts)
 
 -- Luasnip
 keymap("i", "<C-n>", "<Plug>luasnip-next-choice", opts)

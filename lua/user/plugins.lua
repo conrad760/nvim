@@ -95,14 +95,14 @@ return packer.startup(function(use)
 	use("nvim-treesitter/nvim-treesitter")
 
 	-- Git
-use {
-  'pwntester/octo.nvim',
-  requires = {
-    'nvim-lua/plenary.nvim',
-    'nvim-telescope/telescope.nvim',
-    'nvim-tree/nvim-web-devicons',
+  use {
+    'pwntester/octo.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+      'nvim-tree/nvim-web-devicons',
+    }
   }
-}
 	use("lewis6991/gitsigns.nvim")
   use("rhysd/committia.vim")
 	use("tpope/vim-fugitive")
@@ -138,6 +138,11 @@ use {
     "iamcco/markdown-preview.nvim",
     run = function() vim.fn["mkdp#util#install"]() end,
   })
+  -- debugger
+  use("mfussenegger/nvim-dap")
+  use({ "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} })
+  use("leoluz/nvim-dap-go")
+
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

@@ -1,6 +1,7 @@
 require("user.plugins")
 require("user.plugins.options")
 require("user.plugins.keymaps")
+require("user.plugins.dap")
 require("user.plugins.tagbar")
 require("user.plugins.colorscheme")
 require("user.plugins.cmp")
