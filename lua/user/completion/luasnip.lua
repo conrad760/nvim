@@ -19,7 +19,7 @@ ls.config.set_config({
   },
 })
 
-require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/lua/user/plugins/snippets/" })
+require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/lua/user/completion/snippets/" })
 
 vim.keymap.set({ "i", "s" }, "<leader>;", function()
   if ls.expand_or_jumpable() then

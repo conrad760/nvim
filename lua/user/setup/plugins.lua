@@ -1,4 +1,5 @@
 local fn = vim.fn
+vim.loader.enable()
 
 -- Automatically install packer
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
@@ -40,7 +41,6 @@ packer.init({
 
 -- Install your plugins here
 return packer.startup(function(use)
-	-- My plugins here
   -- Navigations
   use("christoomey/vim-tmux-navigator")
 	use("wbthomason/packer.nvim") -- Have packer manage itself
@@ -86,38 +86,41 @@ return packer.startup(function(use)
   use("williamboman/mason.nvim")
   use("williamboman/mason-lspconfig.nvim")
 	use("neovim/nvim-lspconfig") -- enable LSP
-	use({ "jose-elias-alvarez/null-ls.nvim" }) -- for formatters and linters
+	use("mfussenegger/nvim-lint") -- for linters
 
 	-- Telescope
-	use("nvim-telescope/telescope.nvim")
+	use("nvim-telescope/telescope.nvim") -- fuzzy finder for anything
 
 	-- Treesitter
-	use("nvim-treesitter/nvim-treesitter")
+	use("nvim-treesitter/nvim-treesitter") -- highlighting and info 
 
-	-- Git
-  use {
-    'pwntester/octo.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim',
-      'nvim-tree/nvim-web-devicons',
-    }
-  }
-	use("lewis6991/gitsigns.nvim")
-  use("rhysd/committia.vim")
-	use("tpope/vim-fugitive")
-  use("tpope/vim-unimpaired")
-  use {
-  'pwntester/octo.nvim',
-  requires = {
-    'nvim-lua/plenary.nvim',
-    'nvim-telescope/telescope.nvim',
-    'nvim-tree/nvim-web-devicons',
-  },
-  config = function ()
-    require"octo".setup()
-  end
-  }
+	-- Git 
+	use("lewis6991/gitsigns.nvim") -- Git gutter changes
+  use("rhysd/committia.vim") -- Git commit split diff screen
+	use("tpope/vim-fugitive") -- Git tools
+  use("tpope/vim-unimpaired") -- aliases for [ and ]
+  -- use {
+  --   'pwntester/octo.nvim',
+  --   requires = {
+  --     'nvim-lua/plenary.nvim',
+  --     'nvim-telescope/telescope.nvim',
+  --     'nvim-tree/nvim-web-devicons',
+  --   }
+  -- }
+  -- use {
+  -- 'pwntester/octo.nvim',
+  -- requires = {
+  --   'nvim-lua/plenary.nvim',
+  --   'nvim-telescope/telescope.nvim',
+  --   'nvim-tree/nvim-web-devicons',
+  -- },
+  -- config = function ()
+  --   require"octo".setup({
+  -- suppress_missing_scope = {
+  --   projects_v2 = true,
+  -- }})
+  -- end
+  -- }
 
   -- Databases
   use("tpope/vim-dadbod")
