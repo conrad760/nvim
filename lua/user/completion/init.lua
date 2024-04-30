@@ -1,6 +1,0 @@
-require("user.completion.autocommands")
-require("user.completion.autopairs")
-require("user.completion.cmp")
-require("user.completion.cmp_git")
-require("user.completion.comment")
-require("user.completion.luasnip")

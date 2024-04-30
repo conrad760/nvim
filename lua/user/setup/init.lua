@@ -1,6 +1,0 @@
-require("user.setup.plugins")
-require("user.setup.colorscheme")
-require("user.setup.keymaps")
-require("user.setup.options")
-require("user.setup.project")
-require("user.setup.whichkey")

@@ -1,5 +1,0 @@
-require("user.tools.dadbod")
-require("user.tools.dap")
-require("user.tools.gitsigns")
-require("user.tools.neogit")
-require("user.tools.octo")
