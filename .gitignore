@@ -1,0 +1,5 @@
+autoload/
+plugged/
+spell/
+
+plugin/packer_compiled.lua
