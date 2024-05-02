@@ -20,7 +20,6 @@ return { -- Linting
 		--   inko = { "inko" },
 		--   janet = { "janet" },
 		--   json = { "jsonlint" },
-		--   markdown = { "vale" },
 		--   rst = { "vale" },
 		--   ruby = { "ruby" },
 		--   terraform = { "tflint" },

@@ -11,6 +11,51 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+	group = vim.api.nvim_create_augroup("wrap_spell", { clear = true }),
+	pattern = { "gitcommit", "markdown" },
+	callback = function()
+		vim.opt_local.textwidth = 80
+		vim.opt_local.wrap = true
+		vim.opt_local.spell = true
+		vim.opt_local.tabstop = 2
+		vim.opt_local.softtabstop = 2
+		vim.opt_local.shiftwidth = 2
+		vim.opt_local.expandtab = true
+	end,
+})
+vim.api.nvim_create_autocmd("FileType", {
+	group = vim.api.nvim_create_augroup("wrap_markdowny", { clear = true }),
+	desc = "markdowny.nvim keymaps",
+	pattern = { "gitcommit", "markdown" },
+	callback = function()
+		vim.keymap.set(
+			"v",
+			"<leader>mb",
+			":lua require('markdowny').bold()<cr>",
+			{ buffer = 0, desc = "[m]ake [b]old" }
+		)
+		vim.keymap.set(
+			"v",
+			"<leader>mi",
+			":lua require('markdowny').italic()<cr>",
+			{ buffer = 0, desc = "[m]ake [i]talic" }
+		)
+		vim.keymap.set(
+			"v",
+			"<leader>mlk",
+			":lua require('markdowny').link()<cr>",
+			{ buffer = 0, desc = "[m]ake [l]in[k]" }
+		)
+		vim.keymap.set(
+			"v",
+			"<leader>mc",
+			":lua require('markdowny').code()<cr>",
+			{ buffer = 0, desc = "[m]ake [c]ode" }
+		)
+	end,
+})
+
 vim.cmd([[
   augroup _general_settings
     autocmd!
@@ -27,6 +72,8 @@ vim.cmd([[
 
   augroup _markdown
     autocmd!
+    " Set .md files to use markdown syntax
+    autocmd BufNewFile,BufRead *.md set syntax=markdown
     autocmd FileType markdown setlocal wrap
     autocmd FileType markdown setlocal spell
   augroup end
@@ -36,10 +83,6 @@ vim.cmd([[
     autocmd VimResized * tabdo wincmd = 
   augroup end
 
-  augroup _alpha
-    autocmd!
-    autocmd User AlphaReady set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
-  augroup end
 ]])
 -- Autoformat
 -- augroup _lsp

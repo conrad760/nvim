@@ -6,6 +6,8 @@ require("lazy").setup({
 	require("plugins.vim-unimpaired"),
 	require("plugins.vim-fugitive"),
 	require("plugins.vim-tmux-navigator"),
+	require("plugins.nvim-lspconfig"),
+	require("plugins.nvim-cmp"),
 	require("plugins.comment_nvim"),
 	require("plugins.vim-bbye"),
 	require("plugins.bufferline_nvim"),
@@ -14,8 +16,6 @@ require("lazy").setup({
 	require("plugins.neogit"),
 	require("plugins.which-key_nvim"),
 	require("plugins.telescope_nvim"),
-	require("plugins.nvim-lspconfig"),
-	require("plugins.nvim-cmp"),
 	require("plugins.colortheme"),
 	require("plugins.todo-comments_nvim"),
 	require("plugins.nvim-treesitter"),
@@ -26,6 +26,10 @@ require("lazy").setup({
 	require("plugins.conform"),
 	require("plugins.debug"),
 	require("plugins.committia"),
+	require("plugins.zen-mode_nvim"),
+	require("plugins.markdown-preview"),
+	require("plugins.markdowny_nvim"),
+	require("plugins.trouble"),
 }, {
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the

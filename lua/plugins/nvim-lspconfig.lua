@@ -44,8 +44,9 @@ return { -- LSP Configuration & Plugins
 		--    That is to say, every time a new file is opened that is associated with
 		--    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
 		--    function will be executed to configure the current buffer
+		local kickstart_lsp_attach = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true })
 		vim.api.nvim_create_autocmd("LspAttach", {
-			group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
+			group = kickstart_lsp_attach,
 			callback = function(event)
 				-- NOTE: Remember that Lua is a real programming language, and as such it is possible
 				-- to define small helper and utility functions so you don't have to repeat yourself.
@@ -102,9 +103,9 @@ return { -- LSP Configuration & Plugins
 				--    See `:help CursorHold` for information about when this is executed
 				--
 				-- When you move your cursor, the highlights will be cleared (the second autocommand).
+				local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
 				local client = vim.lsp.get_client_by_id(event.data.client_id)
 				if client and client.server_capabilities.documentHighlightProvider then
-					local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
 					vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 						buffer = event.buf,
 						group = highlight_augroup,
@@ -155,6 +156,13 @@ return { -- LSP Configuration & Plugins
 		--  - settings (table): Override the default settings passed when initializing the server.
 		--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 		local servers = {
+			-- grammarly = {
+			-- 	cmd = { "/Users/conrad/.nvm/versions/node/v20.10.0/bin/grammarly-languageserver", "--stdio" },
+			-- 	filetypes = { "markdown", "text" },
+			-- 	init_options = {
+			-- 		clientId = "client_",
+			-- 	},
+			-- },
 			gopls = {
 				settings = {
 					gopls = {
@@ -186,7 +194,6 @@ return { -- LSP Configuration & Plugins
 			stylua = {}, -- Used to format Lua code
 			dockerls = {},
 			golangci_lint_ls = {},
-			grammarly = {},
 			jsonls = {},
 			marksman = {},
 			pyright = {},

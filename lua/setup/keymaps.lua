@@ -18,6 +18,12 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "clear on pressing 
 
 -- Toggle spell check
 vim.keymap.set("", "<leader>o", ":setlocal spell! spelllang=en_us<CR>", { desc = "Toggle spell check" })
+vim.keymap.set(
+	"n",
+	"<leader>tc",
+	":setlocal <C-R>=&conceallevel ? 'conceallevel=0' : 'conceallevel=2'<CR><CR>",
+	{ desc = "[T]oggle [C]onceallevel" }
+)
 
 ---- Better window navigation
 vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Move to the left" })
