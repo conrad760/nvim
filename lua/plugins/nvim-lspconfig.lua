@@ -207,7 +207,6 @@ return { -- LSP Configuration & Plugins
 			eslint = {},
 			revive = {},
 			html = {},
-			htmx = {},
 		}
 
 		-- Ensure the servers and tools above are installed
