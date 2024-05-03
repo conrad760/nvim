@@ -104,7 +104,8 @@ vim.keymap.set(
 	"<cmd>Telescope git_commits<cr>",
 	{ desc = "Checkout commits", noremap = true, silent = true }
 )
-
+---- Twiliight
+vim.keymap.set("n", "<leader>tt", "<cmd>Twilight<cr>", { desc = "[t]oggle [T]wiliight", noremap = true, silent = true })
 ---- DB / Dadbod
 --keymap("n", "<leader>dad", ":DBUIToggle<CR>", opts)
 --

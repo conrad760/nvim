@@ -171,6 +171,7 @@ return { -- LSP Configuration & Plugins
 						analyses = {
 							unusedparams = true,
 						},
+						staticcheck = true,
 						gofumpt = true,
 					},
 				},
