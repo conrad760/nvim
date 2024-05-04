@@ -2,6 +2,25 @@
 --  See `:help lua-guide-autocommands`
 -- The next two examples are both ways of writing commands in vim
 
+-- Toggle diagnostics visibility
+function ToggleDiagnostics()
+	-- Check the current state of diagnostics visibility
+	local status, diagnostics_visible = pcall(vim.api.nvim_buf_get_var, 0, "diagnostics_visible")
+
+	if not status or diagnostics_visible then
+		vim.diagnostic.disable(0)
+		vim.api.nvim_buf_set_var(0, "diagnostics_visible", false)
+	else
+		vim.diagnostic.enable(0)
+		vim.api.nvim_buf_set_var(0, "diagnostics_visible", true)
+	end
+end
+
+-- Safely initialize the buffer variable
+pcall(vim.api.nvim_buf_set_var, 0, "diagnostics_visible", true)
+
+vim.api.nvim_create_user_command("ToggleDiagnostics", ToggleDiagnostics, {})
+
 -- Highlight the yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlights the yanked (copied) text",

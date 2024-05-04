@@ -106,6 +106,13 @@ vim.keymap.set(
 )
 ---- Twiliight
 vim.keymap.set("n", "<leader>tt", "<cmd>Twilight<cr>", { desc = "[t]oggle [T]wiliight", noremap = true, silent = true })
+---- Custom
+vim.keymap.set(
+	"n",
+	"<leader>td",
+	"<cmd>ToggleDiagnostics<cr>",
+	{ desc = "[t]oggle [D]iagnostics", noremap = true, silent = true }
+)
 ---- DB / Dadbod
 --keymap("n", "<leader>dad", ":DBUIToggle<CR>", opts)
 --
