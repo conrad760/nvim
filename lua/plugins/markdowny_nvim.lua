@@ -1,6 +1,6 @@
 return {
 	"antonk52/markdowny.nvim",
-	opt = {
+	opts = {
 		filetypes = { "markdown", "txt", "_markdown" },
 		pattern = { "gitcommit", "markdown" },
 	},
