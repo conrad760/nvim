@@ -207,6 +207,7 @@ return { -- LSP Configuration & Plugins
 			eslint = {},
 			revive = {},
 			html = {},
+			elmls = {},
 		}
 
 		-- Ensure the servers and tools above are installed
