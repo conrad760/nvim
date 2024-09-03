@@ -18,12 +18,12 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "clear on pressing 
 
 -- Toggle spell check
 vim.keymap.set("", "<leader>o", ":setlocal spell! spelllang=en_us<CR>", { desc = "Toggle spell check" })
-vim.keymap.set(
-	"n",
-	"<leader>tc",
-	":setlocal <C-R>=&conceallevel ? 'conceallevel=0' : 'conceallevel=2'<CR><CR>",
-	{ desc = "[T]oggle [C]onceallevel" }
-)
+-- vim.keymap.set(
+-- 	"n",
+-- 	"<leader>tc",
+-- 	":setlocal <C-R>=&conceallevel ? 'conceallevel=0' : 'conceallevel=2'<CR><CR>",
+-- 	{ desc = "[T]oggle [C]onceallevel" }
+-- )
 
 ---- Better window navigation
 vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Move to the left" })
@@ -54,8 +54,8 @@ vim.keymap.set("i", "kj", "<ESC>", { desc = "Press kj fast to exit insert mode",
 --
 ---- Visual --
 ---- Stay in indent mode
-vim.keymap.set("v", "<<", "<gv", { desc = "Press kj fast to exit insert mode", noremap = true, silent = true })
-vim.keymap.set("v", ">>", ">gv", { desc = "Stay selected when indenting blocks", noremap = true, silent = true })
+-- vim.keymap.set("v", "<<", "<gv", { desc = "Press kj fast to exit insert mode", noremap = true, silent = true })
+-- vim.keymap.set("v", ">>", ">gv", { desc = "Stay selected when indenting blocks", noremap = true, silent = true })
 --
 ---- Move text up and down
 --keymap("v", "<A-j>", ":m .+1<CR>==", opts)
@@ -109,7 +109,7 @@ vim.keymap.set("n", "<leader>tt", "<cmd>Twilight<cr>", { desc = "[t]oggle [T]wil
 ---- Custom
 vim.keymap.set(
 	"n",
-	"<leader>td",
+	"<leader>tD",
 	"<cmd>ToggleDiagnostics<cr>",
 	{ desc = "[t]oggle [D]iagnostics", noremap = true, silent = true }
 )

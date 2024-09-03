@@ -207,7 +207,11 @@ return { -- LSP Configuration & Plugins
 			eslint = {},
 			revive = {},
 			html = {},
-			elmls = {},
+			elmls = {
+				disableElmLSDiagnostics = false, -- Set to true to disable elm-ls diagnostics
+				onlyUpdateDiagnosticsOnSave = false, -- Update diagnostics on save only
+				suggestSpecs = true,
+			},
 		}
 
 		-- Ensure the servers and tools above are installed
