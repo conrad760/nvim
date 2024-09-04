@@ -5,6 +5,7 @@ require("lazy").setup({
 	require("plugins.vim-rhubarb"),
 	require("plugins.vim-unimpaired"),
 	require("plugins.vim-fugitive"),
+	require("plugins.dadbod"),
 	require("plugins.vim-tmux-navigator"),
 	require("plugins.nvim-lspconfig"),
 	require("plugins.nvim-cmp"),

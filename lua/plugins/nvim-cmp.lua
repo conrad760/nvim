@@ -35,12 +35,19 @@ return { -- Autocompletion
 		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-buffer",
 		"hrsh7th/cmp-cmdline",
+		"vim-dadbod-completion",
 	},
 	config = function()
 		-- See `:help cmp`
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
 		luasnip.config.setup({})
+		cmp.setup.filetype({ "sql" }, {
+			sources = {
+				{ name = "vim-dadbod-completion" },
+				{ name = "buffer" },
+			},
+		})
 
 		cmp.setup({
 			snippet = {
