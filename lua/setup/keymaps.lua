@@ -113,6 +113,7 @@ vim.keymap.set(
 	"<cmd>ToggleDiagnostics<cr>",
 	{ desc = "[t]oggle [D]iagnostics", noremap = true, silent = true }
 )
+
 ---- DB / Dadbod
 --keymap("n", "<leader>dad", ":DBUIToggle<CR>", opts)
 --
