@@ -22,8 +22,9 @@ require("lazy").setup({
 	require("plugins.nvim-treesitter"),
 	require("plugins.lint"),
 	require("plugins.gitsigns"),
-	require("plugins.neo-tree"),
-	require("plugins.oil"),
+	require("plugins.neo-tree"), -- DEPRICATE w/ nnn
+	-- require("plugins.nnn_nvim"), -- NOT THERE Yet
+	require("plugins.oil"), -- DEPRICATE w/ nnn
 	require("plugins.conform"),
 	--require("plugins.debug"),
 	--require("plugins.nvim-dap-virtual-text"),
@@ -34,10 +35,12 @@ require("lazy").setup({
 	require("plugins.trouble"),
 	require("plugins.twilight_nvim"),
 	require("plugins.go_nvim"),
+	require("plugins.nvim-goc"),
 	require("plugins.mini"),
 	require("plugins.diffview_nvim"),
 	require("plugins.zk-nvim"),
 	require("plugins.neorg"),
+	require("plugins.gen-nvim"),
 }, {
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the
