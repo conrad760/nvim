@@ -2,6 +2,13 @@
 --  See `:help lua-guide-autocommands`
 -- The next two examples are both ways of writing commands in vim
 
+--- Remove all trailing whitespace on save
+local TrimWhiteSpaceGrp = vim.api.nvim_create_augroup("TrimWhiteSpaceGrp", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePre", {
+	command = [[:%s/\s\+$//e]],
+	group = TrimWhiteSpaceGrp,
+})
+
 -- Toggle diagnostics visibility
 function ToggleDiagnostics()
 	-- Check the current state of diagnostics visibility

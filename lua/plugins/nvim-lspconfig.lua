@@ -191,10 +191,18 @@ return { -- LSP Configuration & Plugins
 					},
 				},
 			},
-			tsserver = {},
+			vacuum = {
+				-- cmd = { "vacuum", "lint" }, -- Start Vacuum LSP
+				filetypes = { "openapi.yaml", "openapi.json" }, -- Lint YAML and JSON files
+				settings = {
+					vacuum = {
+						enable = true,
+						-- Optionally define custom rules or settings here
+					},
+				},
+			},
 			stylua = {}, -- Used to format Lua code
 			dockerls = {},
-			golangci_lint_ls = {},
 			jsonls = {},
 			marksman = {},
 			pyright = {},

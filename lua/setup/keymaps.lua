@@ -17,7 +17,7 @@ vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" }
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "clear on pressing <Esc> in normal mode" })
 
 -- Toggle spell check
-vim.keymap.set("", "<leader>o", ":setlocal spell! spelllang=en_us<CR>", { desc = "Toggle spell check" })
+vim.keymap.set("", "<leader>zo", ":setlocal spell! spelllang=en_us<CR>", { desc = "Toggle spell check" })
 -- vim.keymap.set(
 -- 	"n",
 -- 	"<leader>tc",
@@ -114,15 +114,26 @@ vim.keymap.set(
 	{ desc = "[t]oggle [D]iagnostics", noremap = true, silent = true }
 )
 
+vim.keymap.set(
+	"n",
+	"<leader>gfs",
+	":GoFillStruct<cr>",
+	{ desc = "[G]o [F]ill [S]truct", noremap = true, silent = true }
+)
+
+vim.keymap.set(
+	"n",
+	"<leader>gfat",
+	":GoAddAllTest<cr>",
+	{ desc = "[G]o [F]ill [A]ll [T]est", noremap = true, silent = true }
+)
+
+vim.keymap.set("n", "<leader>gft", ":GoAddTest<cr>", { desc = "[G]o [F]ill [T]est", noremap = true, silent = true })
+
 ---- DB / Dadbod
 --keymap("n", "<leader>dad", ":DBUIToggle<CR>", opts)
 --
----- ChatGPT
---keymap("n", "<leader>tk", "<cmd>:ChatGPT<cr>", opts)
---keymap("n", "<leader>tj", "<cmd>:ChatGPTActAs<cr>", opts)
---keymap("n", "<leader>tt", "<cmd>:ChatGPTEditWithInstructions<cr>", opts)
---
----- DAP
+----- DAP
 ----
 --keymap("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", opts)
 --keymap("n", "<leader>dc", "<cmd>lua require'dap'.continue()<cr>", opts)

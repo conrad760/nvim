@@ -74,5 +74,6 @@ vim.opt.tabstop = 2
 vim.opt.wrap = false
 vim.opt.sidescrolloff = 2
 vim.opt.guifont = "Monaco:h10"
+vim.opt.foldlevel = 8
 
 vim.opt.shortmess:append("c")
