@@ -38,9 +38,12 @@ require("lazy").setup({
 	require("plugins.nvim-goc"),
 	require("plugins.mini"),
 	require("plugins.diffview_nvim"),
-	require("plugins.zk-nvim"),
+	-- require("plugins.zk-nvim"),
 	require("plugins.neorg"),
 	require("plugins.gen-nvim"),
+	require("plugins.obsidian"),
+	require("plugins.nvim-window-picker"),
+	--	require("plugins.json2struct"), -- untested
 }, {
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the

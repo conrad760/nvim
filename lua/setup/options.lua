@@ -60,7 +60,7 @@ vim.opt.scrolloff = 10
 
 vim.opt.cmdheight = 1
 vim.opt.completeopt = { "menuone", "noselect" }
-vim.opt.conceallevel = 0
+vim.opt.conceallevel = 1
 vim.opt.fileencoding = "utf-8"
 vim.opt.hlsearch = true
 vim.opt.smartindent = true
