@@ -15,10 +15,10 @@ function ToggleDiagnostics()
 	local status, diagnostics_visible = pcall(vim.api.nvim_buf_get_var, 0, "diagnostics_visible")
 
 	if not status or diagnostics_visible then
-		vim.diagnostic.disable(0)
+		vim.diagnostic.enabel(false)
 		vim.api.nvim_buf_set_var(0, "diagnostics_visible", false)
 	else
-		vim.diagnostic.enable(0)
+		vim.diagnostic.enable()
 		vim.api.nvim_buf_set_var(0, "diagnostics_visible", true)
 	end
 end
@@ -85,8 +85,8 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.cmd([[
   augroup _general_settings
     autocmd!
-    autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR> 
-    autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 200}) 
+    autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>
+    autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 200})
     autocmd FileType qf set nobuflisted
   augroup end
 
@@ -106,7 +106,7 @@ vim.cmd([[
 
   augroup _auto_resize
     autocmd!
-    autocmd VimResized * tabdo wincmd = 
+    autocmd VimResized * tabdo wincmd =
   augroup end
 
 ]])
