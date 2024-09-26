@@ -11,7 +11,7 @@ require("lazy").setup({
 	require("plugins.nvim-cmp"),
 	require("plugins.comment_nvim"),
 	require("plugins.vim-bbye"),
-	require("plugins.bufferline_nvim"),
+	-- 	require("plugins.bufferline_nvim"),
 	require("plugins.lualine_nvim"),
 	require("plugins.nvim-autopairs"),
 	require("plugins.neogit"),
@@ -22,8 +22,7 @@ require("lazy").setup({
 	require("plugins.nvim-treesitter"),
 	require("plugins.lint"),
 	require("plugins.gitsigns"),
-	require("plugins.neo-tree"), -- DEPRICATE w/ nnn
-	-- require("plugins.nnn_nvim"), -- NOT THERE Yet
+	require("plugins.neo-tree"),
 	require("plugins.oil"), -- DEPRICATE w/ nnn
 	require("plugins.conform"),
 	--require("plugins.debug"),

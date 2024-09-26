@@ -48,12 +48,25 @@ return { -- Fuzzy Finder (files, lsp, etc)
 			-- You can put your default mappings / updates / etc. in here
 			--  All the info you're looking for is in `:help telescope.setup()`
 			--
-			-- defaults = {
-			--   mappings = {
-			--     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-			--   },
-			-- },
-			-- pickers = {}
+			defaults = {
+				mappings = {
+					i = { ["<c-enter>"] = "to_fuzzy_refine" },
+					n = {
+						["q"] = require("telescope.actions").close,
+						["c"] = require("telescope.actions").delete_buffer,
+					},
+				},
+			},
+			pickers = {
+				find_files = {
+					find_command = { "rg", "--files", "--sortr=modified" },
+				},
+			},
+			path_display = {
+				filename_first = {
+					reverse_directories = true,
+				},
+			},
 			extensions = {
 				-- ["ui-select"] = {
 				-- 	require("telescope.themes").get_dropdown(),
@@ -76,7 +89,13 @@ return { -- Fuzzy Finder (files, lsp, etc)
 		vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
 		vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
 		vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-		vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
+		-- vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" }) -- shift-h
+		vim.keymap.set(
+			"n",
+			"<S-H>",
+			"<cmd>Telescope buffers sort_mru=true sort_lastused=true initial_mode=normal theme=ivy<cr>",
+			{ desc = "Shift [H]uffers" }
+		)
 
 		-- Slightly advanced example of overriding default behavior and theme
 		vim.keymap.set("n", "<leader>/", function()
@@ -101,4 +120,23 @@ return { -- Fuzzy Finder (files, lsp, etc)
 			builtin.find_files({ cwd = vim.fn.stdpath("config") })
 		end, { desc = "[S]earch [N]eovim files" })
 	end,
+	keys = {
+		{
+			"<leader><space>",
+			"<cmd>e #<cr>",
+			desc = "Alternate to last buffer",
+		},
+
+		{
+			"<leader>tl",
+			"<cmd>TodoTelescope keywords=TODO<cr>",
+			desc = "Search [T]ODO [l]ist",
+		},
+
+		{
+			"<leader>ta",
+			"<cmd>TodoTelescope keywords=PERF,HACK,TODO,NOTE,FIX,WARNING<cr>",
+			desc = "Seach [T]ODO [A]ny list",
+		},
+	},
 }
