@@ -44,6 +44,7 @@ require("lazy").setup({
 	require("plugins.obsidian"),
 	require("plugins.nvim-window-picker"),
 	--	require("plugins.json2struct"), -- untested
+	require("plugins.codeium"),
 }, {
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the

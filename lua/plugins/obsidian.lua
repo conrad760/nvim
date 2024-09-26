@@ -11,6 +11,12 @@ return {
 	--   "BufReadPre path/to/my-vault/*.md",
 	--   "BufNewFile path/to/my-vault/*.md",
 	-- },
+	keys = {
+		{ "<leader>zn", "<cmd>:ObsidianNew<CR>", desc = "[z]etal [n]ew" },
+		{ "<leader>zln", "<cmd>:ObsidianLinkNew<CR>", desc = "[z]etal [n]ew" },
+		{ "<leader>zt", "<cmd>:ObsidianNewFromTemplate<CR>", desc = "[z]etal [t]emplate" },
+		{ "<leader>zz", "<cmd>:ObsidianQuickSwitch<CR>", desc = "[z]etal [z]earch" },
+	},
 	dependencies = {
 		-- Required.
 		"nvim-lua/plenary.nvim",
@@ -66,6 +72,26 @@ return {
 			vim.fn.jobstart({ "qlmanage", "-p", img }) -- Mac OS quick look preview
 			-- vim.fn.jobstart({"xdg-open", url})  -- linux
 			-- vim.cmd(':silent exec "!start ' .. url .. '"') -- Windows
+		end,
+		-- Optional, alternatively you can customize the frontmatter data.
+		---@return table
+		note_frontmatter_func = function(note)
+			-- Add the title of the note as an alias.
+			if note.title then
+				note:add_alias(note.title)
+			end
+
+			local out = { id = note.id, aliases = note.aliases, tags = note.tags, area = "", project = "" }
+
+			-- `note.metadata` contains any manually added fields in the frontmatter.
+			-- So here we just make sure those fields are kept in the frontmatter.
+			if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
+				for k, v in pairs(note.metadata) do
+					out[k] = v
+				end
+			end
+
+			return out
 		end,
 		-- Optional, configure additional syntax highlighting / extmarks.
 		-- This requires you have `conceallevel` set to 1 or 2. See `:help conceallevel` for more details.

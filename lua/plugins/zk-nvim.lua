@@ -121,7 +121,5 @@ return {
 
 		-- Preview a linked note.
 		map("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
-		-- Open the code actions for a visual selection.
-		map("v", "<leader>za", ":'<,'>lua vim.lsp.buf.range_code_action()<CR>", opts)
 	end,
 }
