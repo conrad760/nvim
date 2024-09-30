@@ -15,7 +15,7 @@ function ToggleDiagnostics()
 	local status, diagnostics_visible = pcall(vim.api.nvim_buf_get_var, 0, "diagnostics_visible")
 
 	if not status or diagnostics_visible then
-		vim.diagnostic.enabel(false)
+		vim.diagnostic.enable(false)
 		vim.api.nvim_buf_set_var(0, "diagnostics_visible", false)
 	else
 		vim.diagnostic.enable()
