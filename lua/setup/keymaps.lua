@@ -109,9 +109,9 @@ vim.keymap.set("n", "<leader>tt", "<cmd>Twilight<cr>", { desc = "[t]oggle [T]wil
 ---- Custom
 vim.keymap.set(
 	"n",
-	"<leader>tD",
+	"<leader>td",
 	"<cmd>ToggleDiagnostics<cr>",
-	{ desc = "[t]oggle [D]iagnostics", noremap = true, silent = true }
+	{ desc = "[t]oggle [d]iagnostics", noremap = true, silent = true }
 )
 
 vim.keymap.set(
@@ -152,3 +152,9 @@ vim.keymap.set("n", "<leader>gft", ":GoAddTest<cr>", { desc = "[G]o [F]ill [T]es
 --keymap("i", "<C-p>", "<Plug>luasnip-prev-choice", opts)
 --keymap("s", "<C-p>", "<Plug>luasnip-prev-choice", opts)
 --keymap("n", "<leader><leader>s", "<cmd>source ~/.config/nvim/lua/user/completion/luasnip.lua<CR>", opts)
+
+--- Rust (Cargo)
+-- Run
+vim.keymap.set("n", "<leader>cr", "<cmd>Cargo run<cr>", { desc = "[C]argo [R]un", noremap = true, silent = true })
+-- Run test
+vim.keymap.set("n", "<leader>ct", "<cmd>Cargo test<cr>", { desc = "[C]argo [T]est", noremap = true, silent = true })
