@@ -1,94 +1,138 @@
--- debug.lua
---
--- Shows how to use the DAP plugin to debug your code.
---
--- Primarily focused on configuring the debugger for Go, but can
--- be extended to other languages as well.
 return {
-	-- NOTE: Yes, you can install new plugins here!
 	"mfussenegger/nvim-dap",
-	-- NOTE: And you can specify dependencies as well
 	dependencies = {
-		-- Creates a beautiful debugger UI
 		"rcarriga/nvim-dap-ui",
-
-		-- Required dependency for nvim-dap-ui
 		"nvim-neotest/nvim-nio",
-
-		-- Installs the debug adapters for you
 		"williamboman/mason.nvim",
 		"jay-babu/mason-nvim-dap.nvim",
-
-		-- Add your own debuggers here
-		"leoluz/nvim-dap-go",
+		"theHamsta/nvim-dap-virtual-text",
+		"leoluz/nvim-dap-go", -- Add Go debugger support
 	},
 	config = function()
 		local dap = require("dap")
 		local dapui = require("dapui")
 
+		-- Helper function to prompt for command-line arguments.
+		local function get_args()
+			local input = vim.fn.input("Arguments: ")
+			return vim.fn.split(input, " +")
+		end
+
+		-- Mason-nvim-dap: automatically install & setup debuggers.
 		require("mason-nvim-dap").setup({
-			-- Makes a best effort to setup the various debuggers with
-			-- reasonable debug configurations
 			automatic_installation = true,
 			automatic_setup = true,
-
-			-- You can provide additional configuration to the handlers,
-			-- see mason-nvim-dap README for more information
-			handlers = {},
-
-			-- You'll need to check that you have the required things installed
-			-- online, please don't ask me how to install them :)
-			ensure_installed = {
-				-- Update this to ensure that you have the debuggers for the langs you want
-				"delve",
-			},
+			ensure_installed = { "delve", "node-debug2-adapter" },
 		})
 
-		-- Basic debugging keymaps, feel free to change to your liking!
-		vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "Debug: Start/Continue" })
-		vim.keymap.set("n", "<leader>di", dap.step_into, { desc = "Debug: Step Into" })
-		vim.keymap.set("n", "<leader>dn", dap.step_over, { desc = "Debug: Step Over" })
-		vim.keymap.set("n", "<leader>do", dap.step_out, { desc = "Debug: Step Out" })
-		vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Debug: Toggle Breakpoint" })
-		vim.keymap.set("n", "<leader>dC", function()
-			dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
-		end, { desc = "Debug: Set Breakpoint" })
-		vim.keymap.set("n", "<localleader>dd", function()
-			dap.clear_breakpoints()
-			require("notify")("Breakpoints cleared", "warn")
-		end)
-
-		-- Dap UI setup
-		-- For more information, see |:help nvim-dap-ui|
-		-- TODO: Missing required fields in type `dapui.Config`: `mappings`, `element_mappings`, `expand_lines`, `force_buffers`, `layouts`, `floating`, `render`
+		-- Setup dap-ui with some emoji icons.
 		dapui.setup({
-			-- Set icons to characters that are more likely to work in every terminal.
-			--    Feel free to remove or use ones that you like more! :)
-			--    Don't feel like these are good choices.
-			icons = { expanded = "▾", collapsed = "▸", current_frame = "*" },
-			controls = {
-				icons = {
-					pause = "⏸",
-					play = "▶",
-					step_into = "⏎",
-					step_over = "⏭",
-					step_out = "⏮",
-					step_back = "b",
-					run_last = "▶▶",
-					terminate = "⏹",
-					disconnect = "⏏",
+			floating = {
+				max_height = nil,
+				max_width = nil,
+				border = "single",
+				mappings = { close = { "q", "<Esc>" } },
+			},
+
+			mappings = {}, -- Minimal empty mapping
+			element_mappings = {}, -- Minimal empty element mappings
+			expand_lines = true, -- Use true to auto-expand long lines
+			force_buffers = true, -- Force using dedicated buffers for UI elements
+			layouts = {
+				{
+					elements = {
+						{ id = "scopes", size = 0.25 },
+						{ id = "breakpoints", size = 0.25 },
+						{ id = "stacks", size = 0.25 },
+						{ id = "watches", size = 0.25 },
+					},
+					size = 40,
+					position = "left",
+				},
+				{
+					elements = { "repl", "console" },
+					size = 10,
+					position = "bottom",
 				},
 			},
 		})
 
-		-- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-		vim.keymap.set("n", "ds", dapui.toggle, { desc = "Debug: See last session result." })
-
+		-- Automatically open/close the dap-ui on session events.
 		dap.listeners.after.event_initialized["dapui_config"] = dapui.open
 		dap.listeners.before.event_terminated["dapui_config"] = dapui.close
 		dap.listeners.before.event_exited["dapui_config"] = dapui.close
 
-		-- Install golang specific config
+		-- Define the Node adapter.
+		-- Adjust the adapter path if needed.
+		dap.adapters.node2 = {
+			type = "executable",
+			command = "node",
+			args = { vim.fn.stdpath("data") .. "/mason/packages/node-debug2-adapter/out/src/nodeDebug.js" },
+		}
+
+		-- Minimal JavaScript configuration.
+		dap.configurations.javascript = {
+			{
+				name = "Launch current file",
+				type = "node2",
+				request = "launch",
+				program = "${file}",
+				cwd = vim.fn.getcwd(),
+				console = "integratedTerminal",
+			},
+		}
+
+		-- Restore your earlier key mappings.
+		local dap_keymaps = {
+			{
+				"<leader>dB",
+				function()
+					dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
+				end,
+				desc = "Breakpoint Condition",
+			},
+			{ "<leader>db", dap.toggle_breakpoint, desc = "Toggle Breakpoint" },
+			{ "<leader>dc", dap.continue, desc = "Run/Continue" },
+			{
+				"<leader>da",
+				function()
+					dap.continue({ before = get_args })
+				end,
+				desc = "Run with Args",
+			},
+			{ "<leader>dC", dap.run_to_cursor, desc = "Run to Cursor" },
+			{ "<leader>dg", dap.goto_, desc = "Go to Line (No Execute)" },
+			{ "<leader>di", dap.step_into, desc = "Step Into" },
+			{ "<leader>dj", dap.down, desc = "Down" },
+			{ "<leader>dk", dap.up, desc = "Up" },
+			{ "<leader>dl", dap.run_last, desc = "Run Last" },
+			{ "<leader>do", dap.step_out, desc = "Step Out" },
+			{ "<leader>dO", dap.step_over, desc = "Step Over" },
+			{ "<leader>dP", dap.pause, desc = "Pause" },
+			{ "<leader>dr", dap.repl.toggle, desc = "Toggle REPL" },
+			{ "<leader>ds", dap.session, desc = "Session" },
+			{ "<leader>dt", dap.terminate, desc = "Terminate" },
+			{
+				"<leader>dw",
+				function()
+					require("dap.ui.widgets").hover()
+				end,
+				desc = "Widgets",
+			},
+			{
+				"<localleader>dd",
+				function()
+					dap.clear_breakpoints()
+					require("notify")("Breakpoints cleared", "warn")
+				end,
+				desc = "Clear Breakpoints",
+			},
+		}
+		for _, map in ipairs(dap_keymaps) do
+			vim.keymap.set("n", map[1], map[2], { desc = map.desc })
+		end
+
+		-- Initialize Go debugging.
 		require("dap-go").setup()
 	end,
 }

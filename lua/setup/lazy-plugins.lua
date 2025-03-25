@@ -25,8 +25,7 @@ require("lazy").setup({
 	require("plugins.neo-tree"),
 	require("plugins.oil"), -- DEPRICATE w/ nnn
 	require("plugins.conform"),
-	--require("plugins.debug"),
-	--require("plugins.nvim-dap-virtual-text"),
+	require("plugins.debug"),
 	require("plugins.committia"),
 	require("plugins.zen-mode_nvim"),
 	require("plugins.markdown-preview"),
@@ -44,6 +43,7 @@ require("lazy").setup({
 	require("plugins.nvim-window-picker"),
 	--	require("plugins.json2struct"), -- untested
 	require("plugins.codeium"),
+	require("plugins.notify"),
 }, {
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the
