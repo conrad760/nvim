@@ -10,13 +10,12 @@ require("lazy").setup({
 	require("plugins.nvim-cmp"),
 	require("plugins.comment_nvim"),
 	require("plugins.vim-bbye"),
-	-- 	require("plugins.bufferline_nvim"),
 	require("plugins.lualine_nvim"),
 	require("plugins.nvim-autopairs"),
 	require("plugins.neogit"),
 	require("plugins.which-key_nvim"),
 	require("plugins.telescope_nvim"),
-	require("plugins.colortheme"),
+	require("plugins.colortheme"), -- current colors
 	require("plugins.todo-comments_nvim"),
 	require("plugins.treesitter"),
 	require("plugins.nvim-treesitter-context"),
@@ -35,7 +34,7 @@ require("lazy").setup({
 	require("plugins.go_nvim"),
 	require("plugins.nvim-goc"),
 	require("plugins.mini"),
-	-- require("plugins.mini-files"), -- TODO: needs setup
+	require("plugins.mini-files"), -- TODO: needs setup
 	require("plugins.mini-indentscope"),
 	require("plugins.mini-pairs"),
 	require("plugins.mini-surround"),
@@ -48,19 +47,19 @@ require("lazy").setup({
 	--	require("plugins.json2struct"), -- untested
 	require("plugins.codeium"),
 	require("plugins.notify"),
-	-- require("plugins.colorizer-nvim"), -- not working yet
+	require("plugins.colorizer-nvim"), -- not working yet
 	require("plugins.flash"), -- TODO: set this up to replace `s`
 	require("plugins.ghostty"),
 	require("plugins.grug-far"), -- TODO: watch the video
 	-- require("plugins.img-clip"), -- TODO: needs setup
-	-- require("plugins.lualine"), -- TODO: dependent on colors
+	-- require("plugins.lualine"), -- TODO: dependent on MANY
 	require("plugins.luasnip"),
 	require("plugins.mason-nvim"),
 	require("plugins.noice"),
 	require("plugins.nvim-lint"),
 	require("plugins.nvim-lspconfig"),
 	require("plugins.outline"),
-	-- require("plugins.render-markdown"),-- TODO: dependent on colors
+	require("plugins.render-markdown"),
 	require("plugins.snacks"),
 	require("plugins.snipe"),
 	require("plugins.stay-centered"),
