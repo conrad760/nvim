@@ -121,11 +121,11 @@ return { -- Fuzzy Finder (files, lsp, etc)
 		end, { desc = "[S]earch [N]eovim files" })
 	end,
 	keys = {
-		{
-			"<leader><space>",
-			"<cmd>e #<cr>",
-			desc = "Alternate to last buffer",
-		},
+		-- {
+		-- 	"<leader><space>",
+		-- 	"<cmd>e #<cr>",
+		-- 	desc = "Alternate to last buffer",
+		-- },
 
 		{
 			"<leader>tl",

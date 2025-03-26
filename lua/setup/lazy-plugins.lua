@@ -1,7 +1,6 @@
 require("lazy").setup({
 	require("plugins.nvim-web-devicons"),
 	require("plugins.plenary_nvim"), -- Useful lua functions used by lots of plugins
-	-- require("plugins.vim-sleuth"), -- Detect tabstop and shiftwidth automatically
 	require("plugins.vim-rhubarb"),
 	require("plugins.vim-unimpaired"),
 	require("plugins.vim-fugitive"),
@@ -19,11 +18,12 @@ require("lazy").setup({
 	require("plugins.telescope_nvim"),
 	require("plugins.colortheme"),
 	require("plugins.todo-comments_nvim"),
-	require("plugins.nvim-treesitter"),
+	require("plugins.treesitter"),
+	require("plugins.nvim-treesitter-context"),
 	require("plugins.lint"),
 	require("plugins.gitsigns"),
 	require("plugins.neo-tree"),
-	require("plugins.oil"), -- DEPRICATE w/ nnn
+	require("plugins.oil-nvim"), -- DEPRICATE w/ nnn
 	require("plugins.conform"),
 	require("plugins.debug"),
 	require("plugins.committia"),
@@ -35,6 +35,10 @@ require("lazy").setup({
 	require("plugins.go_nvim"),
 	require("plugins.nvim-goc"),
 	require("plugins.mini"),
+	-- require("plugins.mini-files"), -- TODO: needs setup
+	require("plugins.mini-indentscope"),
+	require("plugins.mini-pairs"),
+	require("plugins.mini-surround"),
 	require("plugins.diffview_nvim"),
 	-- require("plugins.zk-nvim"),
 	require("plugins.neorg"),
@@ -44,6 +48,23 @@ require("lazy").setup({
 	--	require("plugins.json2struct"), -- untested
 	require("plugins.codeium"),
 	require("plugins.notify"),
+	-- require("plugins.colorizer-nvim"), -- not working yet
+	require("plugins.flash"), -- TODO: set this up to replace `s`
+	require("plugins.ghostty"),
+	require("plugins.grug-far"), -- TODO: watch the video
+	-- require("plugins.img-clip"), -- TODO: needs setup
+	-- require("plugins.lualine"), -- TODO: dependent on colors
+	require("plugins.luasnip"),
+	require("plugins.mason-nvim"),
+	require("plugins.noice"),
+	require("plugins.nvim-lint"),
+	require("plugins.nvim-lspconfig"),
+	require("plugins.outline"),
+	-- require("plugins.render-markdown"),-- TODO: dependent on colors
+	require("plugins.snacks"),
+	require("plugins.snipe"),
+	require("plugins.stay-centered"),
+	require("plugins.virt-column"),
 }, {
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the
