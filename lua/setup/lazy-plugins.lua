@@ -44,7 +44,6 @@ require("lazy").setup({
 	require("plugins.gen-nvim"),
 	require("plugins.obsidian"),
 	require("plugins.nvim-window-picker"),
-	--	require("plugins.json2struct"), -- untested
 	require("plugins.codeium"),
 	require("plugins.notify"),
 	require("plugins.colorizer-nvim"), -- not working yet
