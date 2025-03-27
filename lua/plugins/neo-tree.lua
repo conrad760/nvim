@@ -11,6 +11,8 @@ return {
 	},
 	cmd = "Neotree",
 	keys = {
+		{ "<leader>e", false },
+		{ "<leader>E", false },
 		{ "<leader>n", ":Neotree reveal_force_cwd<CR>", { desc = "NeoTree reveal" } },
 	},
 	opts = {
