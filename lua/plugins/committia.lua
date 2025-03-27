@@ -1,5 +1,4 @@
 return {
-	"rhysd/committia.vim", -- Git commit split diff screen
 	"rhysd/committia.vim",
 	ft = { "gitcommit", "gitsendemail", "*commit*", "*COMMIT*" },
 	dependencies = { "tpope/vim-fugitive" },
