@@ -17,7 +17,7 @@ require("lazy").setup({
 	require("plugins.telescope_nvim"),
 	require("plugins.colortheme"), -- current colors
 	require("plugins.todo-comments_nvim"),
-	require("plugins.treesitter"),
+	require("plugins.nvim-treesitter"),
 	require("plugins.nvim-treesitter-context"),
 	require("plugins.lint"),
 	require("plugins.gitsigns"),
@@ -63,6 +63,7 @@ require("lazy").setup({
 	require("plugins.snipe"),
 	require("plugins.stay-centered"),
 	require("plugins.virt-column"),
+	require("plugins.atac"),
 }, {
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the
