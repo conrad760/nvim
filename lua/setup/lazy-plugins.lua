@@ -1,12 +1,11 @@
 require("lazy").setup({
-	require("plugins.nvim-web-devicons"),
+	require("plugins.nvim-web-devicons"), -- icon pack
 	require("plugins.plenary_nvim"), -- Useful lua functions used by lots of plugins
-	require("plugins.vim-rhubarb"),
-	require("plugins.vim-unimpaired"),
-	require("plugins.vim-fugitive"),
-	require("plugins.dadbod"),
-	require("plugins.vim-tmux-navigator"),
-	require("plugins.nvim-lspconfig"),
+	require("plugins.vim-unimpaired"), -- handy bracket mappings
+	require("plugins.vim-fugitive"), -- all the git goodness
+	require("plugins.dadbod"), -- database integration
+	require("plugins.vim-tmux-navigator"), -- navigate between tmux panes
+	require("plugins.nvim-lspconfig"), -- Automatically install LSPs and related tools
 	require("plugins.nvim-cmp"),
 	require("plugins.comment_nvim"),
 	require("plugins.vim-bbye"),

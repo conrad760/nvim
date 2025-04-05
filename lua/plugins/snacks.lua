@@ -56,7 +56,7 @@ return {
 			},
 			-- File picker
 			{
-				"<leader><space>",
+				"<leader>sf",
 				function()
 					Snacks.picker.files({
 						finder = "files",
@@ -66,6 +66,21 @@ return {
 					})
 				end,
 				desc = "Find Files",
+			},
+			{
+				"<leader>sg",
+				function()
+					Snacks.picker.grep({
+						finder = "grep",
+						layout = "telescope",
+						regex = true,
+						format = "file",
+						show_empty = true,
+						live = true, -- live grep by default
+						supports_live = true,
+					})
+				end,
+				desc = "[S]earch by [G]rep",
 			},
 			-- Navigate my buffers
 			{
