@@ -50,8 +50,7 @@ return {
 					},
 				},
 				mini = {
-					-- timeout = 5000, -- timeout in milliseconds
-					timeout = vim.g.neovim_mode == "skitty" and 2000 or 5000,
+					timeout = 5000,
 					align = "center",
 					position = {
 						-- Centers messages top to bottom
@@ -61,6 +60,14 @@ return {
 					},
 				},
 			},
+		},
+		dependencies = {
+			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+			"MunifTanjim/nui.nvim",
+			-- OPTIONAL:
+			--   `nvim-notify` is only needed, if you want to use the notification view.
+			--   If not available, we use `mini` as the fallback
+			"rcarriga/nvim-notify",
 		},
 	},
 }

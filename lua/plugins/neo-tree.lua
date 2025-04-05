@@ -13,7 +13,7 @@ return {
 	keys = {
 		{ "<leader>e", false },
 		{ "<leader>E", false },
-		{ "<leader>n", ":Neotree reveal_force_cwd<CR>", { desc = "NeoTree reveal" } },
+		{ "<leader>N", ":Neotree reveal_force_cwd<CR>", { desc = "NeoTree reveal" } },
 	},
 	opts = {
 		filesystem = {
