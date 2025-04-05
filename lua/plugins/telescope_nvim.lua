@@ -128,7 +128,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
 		-- },
 
 		{
-			"<leader>tl",
+			"<leader>tdl",
 			"<cmd>TodoTelescope keywords=TODO<cr>",
 			desc = "Search [T]ODO [l]ist",
 		},

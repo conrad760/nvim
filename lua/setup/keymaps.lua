@@ -12,7 +12,6 @@
 --   command_mode = "c",
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
-
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "clear on pressing <Esc> in normal mode" })
 
@@ -37,6 +36,9 @@ vim.keymap.set("n", "<Up>", "gk", { desc = "Go to the line above even on wrapped
 vim.keymap.set("i", "<Down>", "<C-o>gj", { desc = "Go to the line below even on wrapped text" })
 vim.keymap.set("i", "<Up>", "<C-o>gk", { desc = "Go to the line above even on wrapped text" })
 vim.keymap.set("n", "<S-Tab>", "<C-w>w", { desc = "Cycle throch windows" })
+vim.keymap.set("n", "<leader>tn", ":tabnew<CR>", { desc = "new tab" })
+vim.keymap.set("n", "<leader>tc", ":tabclose<CR>", { desc = "close tab" })
+vim.keymap.set("n", "<leader>tl", ":tabs<CR>", { desc = "list tabs" })
 
 ---- Navigate buffers
 vim.keymap.set("n", "<S-l>", ":bnext<CR>", { desc = "open next buffer", noremap = true, silent = true })
