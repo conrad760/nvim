@@ -102,7 +102,7 @@ return {
 		},
 		-- Open the current working directory
 		{
-			"<leader>E",
+			"<leader>ee",
 			function()
 				require("mini.files").open(vim.uv.cwd(), true)
 			end,

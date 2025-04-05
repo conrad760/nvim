@@ -9,6 +9,9 @@ return {
 		"ibhagwan/fzf-lua", -- optional
 		"echasnovski/mini.pick", -- optional
 	},
-	keys = { { "<leader>gg", "<cmd>:Neogit<CR>", desc = "Open Neogit" } },
+	keys = {
+		{ "<leader>gg", "<cmd>:Neogit kind=auto<CR>", desc = "Open Neogit" },
+		{ "<M-g>", "<cmd>:Neogit kind=float<CR>", desc = "Open Neogit" },
+	},
 	config = true,
 }
