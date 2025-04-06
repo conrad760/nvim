@@ -1,8 +1,8 @@
 return {
 	"rcarriga/nvim-notify",
+	enabled = false,
 	config = function()
 		require("notify").setup({
-			enabled = false,
 			-- Animation style for notifications (try "fade_in_slide_out", "slide", etc.)
 			stages = "fade_in_slide_out",
 			-- Time (in ms) each notification is displayed

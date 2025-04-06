@@ -148,11 +148,32 @@ vim.keymap.set("n", "<leader>gft", ":GoAddTest<cr>", { desc = "[G]o [F]ill [T]es
 --keymap("n", "<leader>ds", "<cmd>lua require'dap'.terminate()<cr>", opts)
 --keymap("n", "<leader>dt", "<cmd>lua require'dap-go'.debug_test()<cr>", opts)
 --
----- Luasnip
---keymap("i", "<C-n>", "<Plug>luasnip-next-choice", opts)
---keymap("s", "<C-n>", "<Plug>luasnip-next-choice", opts)
---keymap("i", "<C-p>", "<Plug>luasnip-prev-choice", opts)
---keymap("s", "<C-p>", "<Plug>luasnip-prev-choice", opts)
+-- Luasnip
+vim.api.nvim_set_keymap(
+	"i",
+	"<C-p>",
+	"<cmd>lua require('luasnip').change_choice(-1)<CR>",
+	{ silent = true, noremap = true }
+)
+vim.api.nvim_set_keymap(
+	"s",
+	"<C-p>",
+	"<cmd>lua require('luasnip').change_choice(-1)<CR>",
+	{ silent = true, noremap = true }
+)
+vim.api.nvim_set_keymap(
+	"i",
+	"<C-n>",
+	"<cmd>lua require('luasnip').change_choice(1)<CR>",
+	{ silent = true, noremap = true }
+)
+vim.api.nvim_set_keymap(
+	"s",
+	"<C-n>",
+	"<cmd>lua require('luasnip').change_choice(1)<CR>",
+	{ silent = true, noremap = true }
+)
+
 --keymap("n", "<leader><leader>s", "<cmd>source ~/.config/nvim/lua/user/completion/luasnip.lua<CR>", opts)
 
 --- Rust (Cargo)

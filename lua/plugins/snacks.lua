@@ -1,7 +1,3 @@
--- Filename: ~/github/dotfiles-latest/neovim/neobean/lua/plugins/snacks.lua
--- ~/github/dotfiles-latest/neovim/neobean/lua/plugins/snacks.lua
-
--- https://github.com/folke/snacks.nvim/blob/main/docs/lazygit.md
 -- https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
 -- https://github.com/folke/snacks.nvim/blob/main/docs/image.md
 

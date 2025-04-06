@@ -40,104 +40,52 @@ return {
 		})
 		local s = extend_decorator.apply(ls.s, {})
 
-		-- local s = ls.snippet
+		local s = ls.snippet
 		local t = ls.text_node
 		local i = ls.insert_node
 		local f = ls.function_node
+		local c = ls.choice_node
 
 		local function clipboard()
 			return vim.fn.getreg("+")
 		end
 
-		-- Path to the text file containing video snippets
-		local snippets_file = vim.fn.expand("~/github/obsidian_main/300-youtube/youtube-video-list.txt")
+		-- #####################################################################
+		--                            gitcommit
+		-- #####################################################################
 
-		-- Check if the file exists before proceeding
-		if vim.fn.filereadable(snippets_file) == 1 then
-			-- Base function to process YouTube snippets with custom formatting
-			local function process_youtube_snippets(file_path, format_func)
-				local snippets = {}
-				local file = io.open(file_path, "r")
-				if not file then
-					vim.notify("Could not open snippets file: " .. file_path, vim.log.levels.ERROR)
-					return snippets
-				end
-
-				local lines = {}
-				for line in file:lines() do
-					if line == "" then
-						if #lines == 2 then
-							local raw_title, url = lines[1], lines[2]
-							-- Removed spaces and any other special characters as I was having
-							-- issues triggering the snippets
-							local trig_title = raw_title:gsub("[^%w]", "")
-							local formatted_content = format_func(trig_title, raw_title, url)
-							table.insert(snippets, formatted_content)
-						end
-						lines = {}
-					else
-						table.insert(lines, line)
-					end
-				end
-
-				-- Handle the last snippet if file doesn't end with blank line
-				if #lines == 2 then
-					local raw_title, url = lines[1], lines[2]
-					-- Removed spaces and any other special characters as I was having
-					-- issues triggering the snippets
-					local trig_title = raw_title:gsub("[^%w]", "")
-					local formatted_content = format_func(trig_title, raw_title, url)
-					table.insert(snippets, formatted_content)
-				end
-
-				file:close()
-				return snippets
-			end
-
-			-- Format functions for different types of YouTube snippets
-			local format_functions = {
-				plain = function(trig_title, title, url)
-					return s({ trig = "yt" .. trig_title }, { t(title), t({ "", url }) })
-				end,
-
-				markdown = function(trig_title, title, url)
-					local safe_title = string.gsub(title, "|", "-")
-					local markdown_link = string.format("[%s](%s)", safe_title, url)
-					return s({ trig = "ytmd" .. trig_title }, { t(markdown_link) })
-				end,
-
-				markdown_external = function(trig_title, title, url)
-					local safe_title = string.gsub(title, "|", "-")
-					local markdown_link = string.format('[%s](%s){:target="_blank"}', safe_title, url)
-					return s({ trig = "ytex" .. trig_title }, { t(markdown_link) })
-				end,
-
-				-- Extract video ID from URL (everything after the last /)
-				embed = function(trig_title, _, url)
-					local video_id = url:match(".*/(.*)")
-					local embed_code = string.format("{%% include embed/youtube.html id='%s' %%}", video_id)
-					return s({ trig = "ytem" .. trig_title }, { t(embed_code) })
-				end,
-			}
-
-			-- Generate all types of snippets using the base function
-			local video_snippets = process_youtube_snippets(snippets_file, format_functions.plain)
-			local video_md_snippets = process_youtube_snippets(snippets_file, format_functions.markdown)
-			local video_md_snippets_ext = process_youtube_snippets(snippets_file, format_functions.markdown_external)
-			local video_snippets_embed = process_youtube_snippets(snippets_file, format_functions.embed)
-
-			-- Add all types of snippets to the "all" filetype
-			ls.add_snippets("all", video_snippets)
-			ls.add_snippets("all", video_md_snippets)
-			ls.add_snippets("all", video_md_snippets_ext)
-			ls.add_snippets("all", video_snippets_embed)
-		else
-			vim.notify("YouTube snippets file not found, skipping loading.", vim.log.levels.INFO)
-		end
-		-- Custom snippets
-		-- the "all" after ls.add_snippets("all" is the filetype, you can know a
-		-- file filetype with :set ft
-		-- Custom snippets
+		ls.add_snippets("gitcommit", {
+			s("cc", {
+				c(1, {
+					t("feat"),
+					t("fix"),
+					t("docs"),
+					t("style"),
+					t("refactor"),
+					t("perf"),
+					t("test"),
+					t("build"),
+					t("ci"),
+					t("chore"),
+				}),
+				t("("),
+				i(2, "scope"),
+				t("): "),
+				i(3, "commit summary"),
+				t({ "", "", "" }),
+				i(4, "# Detailed description (optional):"),
+				t({
+					"",
+					"",
+					"# References / Issues (optional):",
+					"#- Closes: #0",
+					"#- Fixes: #0",
+					"#- Related: #0",
+				}),
+				t({ "", "" }),
+				i(0),
+			}),
+		})
 
 		-- #####################################################################
 		--                            Markdown
@@ -323,228 +271,6 @@ return {
 				t("]("),
 				f(clipboard, {}),
 				t('){:target="_blank"}'),
-			})
-		)
-
-		-- Inserting "my dotfiles" link
-		table.insert(
-			snippets,
-			s({
-				trig = "dotfileslatest",
-				name = "Adds -> [my dotfiles](https://github.com/linkarzu/dotfiles-latest)",
-				desc = "Add link to https://github.com/linkarzu/dotfiles-latest",
-			}, {
-				t("[my dotfiles](https://github.com/linkarzu/dotfiles-latest)"),
-			})
-		)
-
-		table.insert(
-			snippets,
-			s({
-				trig = "supportme",
-				name = "Inserts links (Ko-fi, Twitter, TikTok)",
-				desc = "Inserts links (Ko-fi, Twitter, TikTok)",
-			}, {
-				t({
-					"Join discord for free -> https://discord.gg/NgqMgwwtMH",
-					"If you want to support me by becoming a YouTube member",
-					"https://www.youtube.com/channel/UCrSIvbFncPSlK6AdwE2QboA/join",
-					"☕ Support me -> https://ko-fi.com/linkarzu",
-					"☑ My Twitter -> https://x.com/link_arzu",
-					"❤‍🔥 My tiktok -> https://www.tiktok.com/@linkarzu",
-					"My dotfiles (remember to star them) -> https://github.com/linkarzu/dotfiles-latest",
-					"A link to my resume -> https://resume.linkarzu.com/",
-				}),
-			})
-		)
-
-		table.insert(
-			snippets,
-			s({
-				trig = "discord",
-				name = "discord support",
-				desc = "discord support",
-			}, {
-				t({
-					"```txt",
-					"I have a members only discord, it's goal is to troubleshoot stuff related to my videos, and try to help users out",
-					"If you want to join, the link can be found below",
-					"https://www.youtube.com/channel/UCrSIvbFncPSlK6AdwE2QboA/join",
-					"```",
-				}),
-			})
-		)
-
-		-- Add a snippet for inserting a blogpost article template
-		table.insert(
-			snippets,
-			s({
-				trig = "blogposttemplate",
-				name = "Insert blog post template",
-				desc = "Insert blog post template with frontmatter and sections",
-			}, {
-				t({ "---", "title: " }),
-				i(1, ""),
-				t({ "", "description: " }),
-				i(2, ""),
-				t({
-					"",
-					"image:",
-					"  path: ./../../assets/img/imgs/250117-thux-simple-bar-sketchybar.avif",
-					"date: '2025-01-16 06:10:00 +0000'",
-					"categories:",
-					"  - macos",
-					"tags:",
-					"  - macos",
-					"  - tutorial",
-					"  - youtube",
-					"  - video",
-					"---",
-					"## Contents",
-					"",
-					"### Table of contents",
-					"",
-					"<!-- toc -->",
-					"",
-					"<!-- tocstop -->",
-					"",
-					"## YouTube video",
-					"",
-					"{% include embed/youtube.html id='' %}",
-					"",
-					"## Pre-requisites",
-					"",
-					"- List any here",
-					"",
-					"## If you like my content, and want to support me",
-					"",
-					'- If you want to share a tip, you can [donate here](https://ko-fi.com/linkarzu/goal?g=6){:target="_blank"}',
-					"- I recently was laid off, so if you know about any SRE related roles, please let me know",
-					"",
-					"## Discord server",
-					"",
-					"- My discord server is now open to the public, feel free to join and hang out with others",
-					'- join the [discord server in this link](https://discord.gg/NgqMgwwtMH){:target="_blank"}',
-					"",
-					'[![Image](./../../assets/img/imgs/250210-discord-free.avif){: width="300" }](https://discord.gg/NgqMgwwtMH){:target="_blank"}',
-					"",
-					"## Follow me on social media",
-					"",
-					'- [Twitter (or "X")](https://x.com/link_arzu){:target="_blank"}',
-					'- [LinkedIn](https://www.linkedin.com/in/christianarzu){:target="_blank"}',
-					'- [TikTok](https://www.tiktok.com/@linkarzu){:target="_blank"}',
-					'- [Instagram](https://www.instagram.com/link_arzu){:target="_blank"}',
-					'- [GitHub](https://github.com/linkarzu){:target="_blank"}',
-					'- [Threads](https://www.threads.net/@link_arzu){:target="_blank"}',
-					'- [OnlyFans 🍆](https://linkarzu.com/assets/img/imgs/250126-whyugae.avif){:target="_blank"}',
-					'- [YouTube (subscribe MF, subscribe)](https://www.youtube.com/@linkarzu){:target="_blank"}',
-					'- [Ko-Fi](https://ko-fi.com/linkarzu/goal?g=6){:target="_blank"}',
-					"",
-					"## All links in the video description",
-					"",
-					"- The following links will be in the YouTube video description:",
-					"  - Each one of the videos shown",
-					"  - A link to this blogpost",
-					"",
-					"## How do you manage your passwords?",
-					"",
-					"- I've tried many different password managers in the past, I've switched from `LastPass` to `Dashlane` and finally ended up in `1password`",
-					"- You want to find out why? More info in my article:",
-					'  - [How I use 1password to keep all my accounts safe](https://linkarzu.com/posts/1password/1password/){:target="_blank"}',
-					"- **If you want to support me in keeping this blogpost ad free, start your 1password 14 day free trial by clicking the image below**",
-					"",
-					'[![Image](../../assets/img/imgs/250124-1password-banner.avif){: width="300" }](https://www.dpbolvw.net/click-101327218-15917064){:target="_blank"}',
-					"",
-					"",
-				}),
-			})
-		)
-
-		-- Add a snippet for inserting a video markdown template
-		table.insert(
-			snippets,
-			s({
-				trig = "videotemplate",
-				name = "Insert video markdown template",
-				desc = "Insert video markdown template",
-			}, {
-				t("## "),
-				i(1, "cursor"),
-				t(" video"),
-				t({ "", "", "All of the details and the demo are covered in the video:", "" }),
-				t({ "", "If you don't like watching videos, the keymaps are in " }),
-				t("[my dotfiles](https://github.com/linkarzu/dotfiles-latest)"),
-				t({
-					"",
-					"",
-					"```txt",
-					"Members only discord",
-					"https://www.youtube.com/channel/UCrSIvbFncPSlK6AdwE2QboA/join",
-					"",
-					"If you find this video helpful and want to support me",
-					"https://ko-fi.com/linkarzu",
-					"",
-					"Follow me on twitter",
-					"https://x.com/link_arzu",
-					"",
-					"My dotfiles (remember to star them)",
-					"https://github.com/linkarzu/dotfiles-latest",
-					"",
-					"Videos mentioned in this video:",
-					"",
-					"#linkarzu",
-					"",
-					"1:00 - VIDEO video 1",
-					"2:00 - VIDEO video 2",
-					"```",
-					"",
-					"Video timeline:",
-					"",
-					"```txt",
-					"0:00 -",
-					"```",
-					"",
-					"```txt",
-					"Join discord for free -> https://discord.gg/NgqMgwwtMH",
-					"If you want to support me by becoming a YouTube member",
-					"https://www.youtube.com/channel/UCrSIvbFncPSlK6AdwE2QboA/join",
-					"☕ Support me -> https://ko-fi.com/linkarzu",
-					"☑ My Twitter -> https://x.com/link_arzu",
-					"❤‍🔥 My tiktok -> https://www.tiktok.com/@linkarzu",
-					"Start your setap free trial (my affiliate link)",
-					"setapp.sjv.io/QjKK1a",
-					"Start your 1password trial  (my affiliate link)",
-					"https://www.dpbolvw.net/click-101327218-15917064",
-					"My dotfiles (remember to star them) -> https://github.com/linkarzu/dotfiles-latest",
-					"A link to my resume -> https://resume.linkarzu.com/",
-					"```",
-					"",
-				}),
-			})
-		)
-
-		table.insert(
-			snippets,
-			s({
-				trig = "video-skitty",
-				name = "New video in skitty-notes",
-				desc = "New video in skitty-notes",
-			}, {
-				t("## "),
-				i(1, "video name"),
-				t({
-					"",
-					"",
-					"- [ ] ",
-				}),
-				i(2, ""), -- This is now the second jump point
-				t({
-					"",
-					"- [ ] **Thank supporters**",
-					"- [ ] Push GitHub changes",
-					"- [ ] Share discord server",
-					"",
-				}),
 			})
 		)
 

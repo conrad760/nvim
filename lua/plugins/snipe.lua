@@ -5,6 +5,7 @@
 return {
 	-- "linkarzu/snipe.nvim",
 	"leath-dub/snipe.nvim",
+	enabled = false,
 	keys = {
 		{
 			"<S-l>",
