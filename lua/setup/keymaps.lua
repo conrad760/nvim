@@ -111,7 +111,7 @@ vim.keymap.set("n", "<leader>tt", "<cmd>Twilight<cr>", { desc = "[t]oggle [T]wil
 ---- Custom
 vim.keymap.set(
 	"n",
-	"<leader>td",
+	"<leader>tdd",
 	"<cmd>ToggleDiagnostics<cr>",
 	{ desc = "[t]oggle [d]iagnostics", noremap = true, silent = true }
 )
