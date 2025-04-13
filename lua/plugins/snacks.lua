@@ -79,34 +79,34 @@ return {
 				desc = "[S]earch by [G]rep",
 			},
 			-- Navigate my buffers
-			{
-				"<S-h>",
-				function()
-					Snacks.picker.buffers({
-						-- I always want my buffers picker to start in normal mode
-						on_show = function()
-							vim.cmd.stopinsert()
-						end,
-						finder = "buffers",
-						format = "buffer",
-						hidden = false,
-						unloaded = true,
-						current = true,
-						sort_lastused = true,
-						win = {
-							input = {
-								keys = {
-									["c"] = "bufdelete",
-								},
-							},
-							list = { keys = { ["c"] = "bufdelete" } },
-						},
-						-- In case you want to override the layout for this keymap
-						layout = "ivy",
-					})
-				end,
-				desc = "[P]Snacks picker buffers",
-			},
+			-- {
+			-- 	"<S-h>",
+			-- 	function()
+			-- 		Snacks.picker.buffers({
+			-- 			-- I always want my buffers picker to start in normal mode
+			-- 			on_show = function()
+			-- 				vim.cmd.stopinsert()
+			-- 			end,
+			-- 			finder = "buffers",
+			-- 			format = "buffer",
+			-- 			hidden = false,
+			-- 			unloaded = true,
+			-- 			current = true,
+			-- 			sort_lastused = true,
+			-- 			win = {
+			-- 				input = {
+			-- 					keys = {
+			-- 						["c"] = "bufdelete",
+			-- 					},
+			-- 				},
+			-- 				list = { keys = { ["c"] = "bufdelete" } },
+			-- 			},
+			-- 			-- In case you want to override the layout for this keymap
+			-- 			layout = "ivy",
+			-- 		})
+			-- 	end,
+			-- 	desc = "[P]Snacks picker buffers",
+			-- },
 		},
 		opts = {
 			-- Documentation for the picker
@@ -188,9 +188,9 @@ return {
 						},
 					},
 				},
-				-- matcher = {
-				-- 	frecency = true,
-				-- },
+				matcher = {
+					frecency = true,
+				},
 				win = {
 					input = {
 						keys = {

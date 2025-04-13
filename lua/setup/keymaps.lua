@@ -41,11 +41,11 @@ vim.keymap.set("n", "<leader>tc", ":tabclose<CR>", { desc = "close tab" })
 vim.keymap.set("n", "<leader>tl", ":tabs<CR>", { desc = "list tabs" })
 
 ---- Navigate buffers
-vim.keymap.set("n", "<S-l>", ":bnext<CR>", { desc = "open next buffer", noremap = true, silent = true })
-vim.keymap.set("n", "<S-h>", ":bprevious<CR>", { desc = "open previous buffer", noremap = true, silent = true })
+-- vim.keymap.set("n", "<S-l>", ":bnext<CR>", { desc = "open next buffer", noremap = true, silent = true })
+-- vim.keymap.set("n", "<S-h>", ":bprevious<CR>", { desc = "open previous buffer", noremap = true, silent = true })
 
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
+vim.keymap.set("n", "[d", vim.diagnostic.get_prev, { desc = "Go to previous [D]iagnostic message" })
+vim.keymap.set("n", "]d", vim.diagnostic.get_next, { desc = "Go to next [D]iagnostic message" })
 vim.keymap.set("n", "<leader>l", vim.diagnostic.open_float, { desc = "Show diagnostic error messages" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 

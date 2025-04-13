@@ -63,6 +63,7 @@ require("lazy").setup({
 	require("plugins.stay-centered"),
 	require("plugins.virt-column"),
 	require("plugins.atac"),
+	require("plugins.flash"),
 }, {
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the

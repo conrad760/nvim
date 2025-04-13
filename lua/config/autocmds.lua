@@ -11,7 +11,7 @@
 -- local colors = require("config.colors")
 
 local function augroup(name)
-  return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
+	return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
 end
 
 -- -- This is for dadbod-ui auto completion
@@ -34,38 +34,38 @@ end
 
 -- close some filetypes with <esc>
 vim.api.nvim_create_autocmd("FileType", {
-  group = augroup("close_with_q"),
-  pattern = {
-    "PlenaryTestPopup",
-    "grug-far",
-    "help",
-    "lspinfo",
-    "notify",
-    "qf",
-    "spectre_panel",
-    "startuptime",
-    "tsplayground",
-    "neotest-output",
-    "checkhealth",
-    "neotest-summary",
-    "neotest-output-panel",
-    "dbout",
-    "gitsigns-blame",
-    "Lazy",
-  },
-  callback = function(event)
-    vim.bo[event.buf].buflisted = false
-    vim.schedule(function()
-      vim.keymap.set("n", "<esc>", function()
-        vim.cmd("close")
-        pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
-      end, {
-        buffer = event.buf,
-        silent = true,
-        desc = "Quit buffer",
-      })
-    end)
-  end,
+	group = augroup("close_with_q"),
+	pattern = {
+		"PlenaryTestPopup",
+		"grug-far",
+		"help",
+		"lspinfo",
+		"notify",
+		"qf",
+		"spectre_panel",
+		"startuptime",
+		"tsplayground",
+		"neotest-output",
+		"checkhealth",
+		"neotest-summary",
+		"neotest-output-panel",
+		"dbout",
+		"gitsigns-blame",
+		"Lazy",
+	},
+	callback = function(event)
+		vim.bo[event.buf].buflisted = false
+		vim.schedule(function()
+			vim.keymap.set("n", "<esc>", function()
+				vim.cmd("close")
+				pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
+			end, {
+				buffer = event.buf,
+				silent = true,
+				desc = "Quit buffer",
+			})
+		end)
+	end,
 })
 
 -- -- This is used to switch between light and dark background colors when the
@@ -179,15 +179,15 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- wrap and check for spell in text filetypes
 vim.api.nvim_create_autocmd("FileType", {
-  group = augroup("wrap_spell"),
-  pattern = { "text", "plaintex", "typst", "gitcommit", "markdown" },
-  callback = function()
-    -- -- By default wrap is set to true regardless of what I chose in my options.lua file,
-    -- -- This sets wrapping for my skitty-notes and I don't want to have
-    -- -- wrapping there, I wanto to decide this in the options.lua file
-    -- vim.opt_local.wrap = false
-    vim.opt_local.spell = true
-  end,
+	group = augroup("wrap_spell"),
+	pattern = { "text", "plaintex", "typst", "gitcommit", "markdown" },
+	callback = function()
+		-- -- By default wrap is set to true regardless of what I chose in my options.lua file,
+		-- -- This sets wrapping for my skitty-notes and I don't want to have
+		-- -- wrapping there, I wanto to decide this in the options.lua file
+		-- vim.opt_local.wrap = false
+		vim.opt_local.spell = true
+	end,
 })
 
 -- Show LSP diagnostics (inlay hints) in a hover window / popup lamw26wmal
@@ -208,13 +208,13 @@ vim.api.nvim_create_autocmd("FileType", {
 --   { "▏", "FloatBorder" },
 -- }
 vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-  group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
-  callback = function()
-    vim.diagnostic.open_float(nil, {
-      focus = false,
-      border = "rounded",
-    })
-  end,
+	group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
+	callback = function()
+		vim.diagnostic.open_float(nil, {
+			focus = false,
+			border = "rounded",
+		})
+	end,
 })
 
 -- When I open markdown files I want to fold the markdown headings
@@ -223,24 +223,24 @@ vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 --
 -- if vim.g.neovim_mode == "skitty" then
 vim.api.nvim_create_autocmd("BufRead", {
-  pattern = "*.md",
-  callback = function()
-    -- Get the full path of the current file
-    local file_path = vim.fn.expand("%:p")
-    -- Ignore files in my daily note directory
-    if file_path:match(os.getenv("HOME") .. "/github/obsidian_main/250%-daily/") then
-      return
-    end -- Avoid running zk multiple times for the same buffer
-    if vim.b.zk_executed then
-      return
-    end
-    vim.b.zk_executed = true -- Mark as executed
-    -- Use `vim.defer_fn` to add a slight delay before executing `zk`
-    vim.defer_fn(function()
-      vim.cmd("normal zk")
-      -- This write was disabling my inlay hints
-      -- vim.cmd("silent write")
-      vim.notify("Folded keymaps", vim.log.levels.INFO)
-    end, 100) -- Delay in milliseconds (100ms should be enough)
-  end,
+	pattern = "*.md",
+	callback = function()
+		-- Get the full path of the current file
+		local file_path = vim.fn.expand("%:p")
+		-- Ignore files in my daily note directory
+		if file_path:match(os.getenv("HOME") .. "/github/obsidian_main/250%-daily/") then
+			return
+		end -- Avoid running zk multiple times for the same buffer
+		if vim.b.zk_executed then
+			return
+		end
+		vim.b.zk_executed = true -- Mark as executed
+		-- Use `vim.defer_fn` to add a slight delay before executing `zk`
+		vim.defer_fn(function()
+			vim.cmd("normal zk")
+			-- This write was disabling my inlay hints
+			-- vim.cmd("silent write")
+			vim.notify("Folded keymaps", vim.log.levels.INFO)
+		end, 100) -- Delay in milliseconds (100ms should be enough)
+	end,
 })

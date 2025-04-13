@@ -32,10 +32,13 @@ return { -- Autocompletion
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
 		luasnip.config.setup({})
-		cmp.setup.filetype({ "sql" }, {
+		cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
 			sources = {
 				{ name = "vim-dadbod-completion" },
 				{ name = "buffer" },
+				{ name = "codeium" },
+				{ name = "luasnip" },
+				{ name = "nvim_lsp" },
 			},
 		})
 
