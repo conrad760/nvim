@@ -48,16 +48,14 @@ How to's
   - This will save the query in the `vim.g.db_ui_save_location` location configured below
 
 --]=====]
-
+--
 return {
 	"kristijanhusak/vim-dadbod-ui",
 	dependencies = {
 		{ "tpope/vim-dadbod", lazy = true },
 		{ "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
 	},
-	keys = { -- Mapping to toggle DBUI
-		{ "<leader>d", "<cmd>DBUIToggle<CR>", desc = "Toggle DBUI" },
-	},
+	keys = {},
 	cmd = {
 		"DBUI",
 		"DBUIToggle",
@@ -69,16 +67,29 @@ return {
 		vim.g.db_ui_win_position = "right"
 		vim.g.db_ui_use_nerd_fonts = 1
 		vim.g.db_ui_use_nvim_notify = 1
-
-		-- This sets the location of the `connections.json` file, which includes the
-		-- DB conection strings (includes passwords in plaintext, so do not track
-		-- this file.)
-		-- The default location for this is `~/.local/share/db_ui`
 		vim.g.db_ui_save_location = "~/.local/share/db_ui"
 		vim.g.db_ui_tmp_query_location = "~/.local/share/db_ui/dadbod/queries"
-
-		vim.g.db_ui_use_nerd_fonts = 1
 		vim.g.db_ui_hide_schemas = { "pg_toast_temp.*" }
+
+		local function toggle_dbui_tab()
+			local dbui_bufname = "dbui"
+			for _, tabnr in ipairs(vim.api.nvim_list_tabpages()) do
+				for _, win in ipairs(vim.api.nvim_tabpage_list_wins(tabnr)) do
+					local buf = vim.api.nvim_win_get_buf(win)
+					local name = vim.api.nvim_buf_get_name(buf)
+
+					if name:match(dbui_bufname) then
+						vim.api.nvim_set_current_tabpage(tabnr) -- switch to tab
+						vim.notify("Switched to DBUI tab")
+						return
+					end
+				end
+			end
+
+			vim.api.nvim_command("tabnew | DBUI")
+		end
+
+		vim.keymap.set("n", "<leader>d", toggle_dbui_tab, { desc = "Toggle DBUI in tab" })
 	end,
 	-- config = function()
 	-- 	local dadbod_env = require("plugins.dadbod_env") -- adjust path if different
