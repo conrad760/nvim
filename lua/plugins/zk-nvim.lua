@@ -1,5 +1,8 @@
+-- TODO: I need to setup some notes on how to get this setup. I haven't used it
+-- in so long I don't remember what I need to do.
 return {
 	"zk-org/zk-nvim",
+	enabled = false,
 	opts = {},
 	config = function()
 		require("zk").setup({

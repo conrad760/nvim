@@ -38,19 +38,17 @@ require("lazy").setup({
 	require("plugins.mini-pairs"),
 	require("plugins.mini-surround"),
 	require("plugins.diffview_nvim"),
-	-- require("plugins.zk-nvim"),
+	require("plugins.zk-nvim"),
 	require("plugins.neorg"),
 	require("plugins.gen-nvim"),
 	require("plugins.obsidian"),
 	require("plugins.nvim-window-picker"),
 	require("plugins.codeium"),
 	require("plugins.notify"),
-	require("plugins.colorizer-nvim"), -- not working yet
+	require("plugins.colorizer-nvim"),
 	require("plugins.flash"), -- TODO: set this up to replace `s`
 	require("plugins.ghostty"),
 	require("plugins.grug-far"), -- TODO: watch the video
-	-- require("plugins.img-clip"), -- TODO: needs setup
-	-- require("plugins.lualine"), -- TODO: dependent on MANY
 	require("plugins.luasnip"),
 	require("plugins.mason-nvim"),
 	require("plugins.noice"),

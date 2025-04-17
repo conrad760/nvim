@@ -82,36 +82,70 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
-vim.cmd([[
-  augroup _general_settings
-    autocmd!
-    autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>
-    autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 200})
-    autocmd FileType qf set nobuflisted
-  augroup end
+-- General settings
+local general_settings = vim.api.nvim_create_augroup("_general_settings", { clear = true })
 
-  augroup _git
-    autocmd!
-    autocmd FileType gitcommit setlocal wrap
-    autocmd FileType gitcommit setlocal spell
-  augroup end
+vim.api.nvim_create_autocmd("FileType", {
+	group = general_settings,
+	pattern = { "qf", "help", "man", "lspinfo", "git" },
+	command = "nnoremap <silent> <buffer> q :close<CR>",
+})
 
-  augroup _markdown
-    autocmd!
-    " Set .md files to use markdown syntax
-    autocmd BufNewFile,BufRead *.md set syntax=markdown
-    autocmd FileType markdown setlocal wrap
-    autocmd FileType markdown setlocal spell
-  augroup end
+vim.api.nvim_create_autocmd("TextYankPost", {
+	group = general_settings,
+	pattern = "*",
+	callback = function()
+		vim.highlight.on_yank({ higroup = "Visual", timeout = 200 })
+	end,
+})
 
-  augroup _auto_resize
-    autocmd!
-    autocmd VimResized * tabdo wincmd =
-  augroup end
+vim.api.nvim_create_autocmd("FileType", {
+	group = general_settings,
+	pattern = "qf",
+	command = "set nobuflisted",
+})
 
-]])
--- Autoformat
--- augroup _lsp
---   autocmd!
---   autocmd BufWritePre * lua vim.lsp.buf.formatting()
--- augroup end
+-- Git settings
+local git_group = vim.api.nvim_create_augroup("_git", { clear = true })
+
+vim.api.nvim_create_autocmd("FileType", {
+	group = git_group,
+	pattern = "gitcommit",
+	command = "setlocal wrap",
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	group = git_group,
+	pattern = "gitcommit",
+	command = "setlocal spell",
+})
+
+-- Markdown settings
+local markdown_group = vim.api.nvim_create_augroup("_markdown", { clear = true })
+
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+	group = markdown_group,
+	pattern = "*.md",
+	command = "set syntax=markdown",
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	group = markdown_group,
+	pattern = "markdown",
+	command = "setlocal wrap",
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	group = markdown_group,
+	pattern = "markdown",
+	command = "setlocal spell",
+})
+
+-- Auto resize splits on Vim resize
+local resize_group = vim.api.nvim_create_augroup("_auto_resize", { clear = true })
+
+vim.api.nvim_create_autocmd("VimResized", {
+	group = resize_group,
+	pattern = "*",
+	command = "tabdo wincmd =",
+})
