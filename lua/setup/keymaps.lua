@@ -129,3 +129,25 @@ vim.api.nvim_set_keymap(
 	"<cmd>lua require('luasnip').change_choice(1)<CR>",
 	{ silent = true, noremap = true }
 )
+
+---- zk ----
+
+vim.keymap.set(
+	"v",
+	"<leader>znt",
+	"<cmd>'<,'>ZkNewFromTitleSelection<CR>",
+	{ desc = "Zk: New from title sel", silent = true }
+)
+
+vim.keymap.set(
+	"v",
+	"<leader>znc",
+	"<cmd>'<,'>ZkNewFromContentSelection<CR>",
+	{ desc = "Zk: New from content sel", silent = true }
+)
+
+vim.keymap.set("n", "<leader>zt", "<cmd>ZkTags<CR>", { desc = "Zk: Tags", silent = true })
+vim.keymap.set("n", "<leader>zN", "<cmd>ZkNotes<CR>", { desc = "Zk: Notes", silent = true })
+vim.keymap.set("n", "<leader>zb", "<cmd>ZkBacklinks<CR>", { desc = "Zk: Backlinks", silent = true })
+vim.keymap.set("n", "<leader>zl", "<cmd>ZkLinks<CR>", { desc = "Zk: Outgoing links", silent = true })
+vim.keymap.set("n", "<leader>zgx", vim.lsp.buf.definition, { desc = "Zk: Go to link", silent = true })
