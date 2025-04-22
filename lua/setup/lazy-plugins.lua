@@ -53,7 +53,6 @@ require("lazy").setup({
 	require("plugins.mason-nvim"),
 	require("plugins.noice"),
 	require("plugins.nvim-lint"),
-	require("plugins.nvim-lspconfig"),
 	require("plugins.outline"),
 	require("plugins.render-markdown"),
 	require("plugins.snacks"),

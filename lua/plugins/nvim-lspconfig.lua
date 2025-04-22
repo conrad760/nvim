@@ -11,7 +11,12 @@ return { -- LSP Configuration & Plugins
 		-- used for completion, annotations and signatures of Neovim apis
 		{ "folke/neodev.nvim", opts = {} },
 	},
-	opts = {},
+	opts = {
+		servers = {
+			nixd = {},
+		},
+	},
+
 	config = function()
 		vim.filetype.add({ extension = { templ = "templ" } })
 
