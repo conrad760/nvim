@@ -17,7 +17,7 @@ M.setup = function()
   local cacheTimeout = 2000 -- Cache timeout in milliseconds
 
   local function isSymlink(path)
-    local stat = vim.loop.fs_lstat(path)
+    local stat = vim.uv.fs_lstat(path)
     return stat and stat.type == "link"
   end
 

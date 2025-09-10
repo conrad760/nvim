@@ -4,24 +4,24 @@ require("lazy").setup({
 	require("plugins.vim-unimpaired"), -- handy bracket mappings
 	require("plugins.vim-fugitive"), -- all the git goodness
 	require("plugins.dadbod"), -- database integration
+	require("plugins.dbee"), -- database integration
 	require("plugins.vim-tmux-navigator"), -- navigate between tmux panes
 	require("plugins.nvim-lspconfig"), -- Automatically install LSPs and related tools
 	require("plugins.nvim-cmp"),
-	require("plugins.comment_nvim"),
+
 	require("plugins.vim-bbye"),
 	require("plugins.lualine_nvim"),
 	require("plugins.nvim-autopairs"),
 	require("plugins.neogit"),
 	require("plugins.which-key_nvim"),
-	require("plugins.telescope_nvim"),
+	require("plugins.snacks-enhanced"), -- Replaces Telescope with Snacks picker
 	require("plugins.colortheme"), -- current colors
 	require("plugins.todo-comments_nvim"),
 	require("plugins.nvim-treesitter"),
 	require("plugins.nvim-treesitter-context"),
 	require("plugins.lint"),
 	require("plugins.gitsigns"),
-	require("plugins.neo-tree"),
-	require("plugins.oil-nvim"), -- DEPRICATE w/ nnn
+
 	require("plugins.conform"),
 	require("plugins.debug"),
 	require("plugins.committia"),
@@ -38,7 +38,6 @@ require("lazy").setup({
 	require("plugins.mini-pairs"),
 	require("plugins.mini-surround"),
 	require("plugins.diffview_nvim"),
-	require("plugins.zk-nvim"),
 	require("plugins.neorg"),
 	require("plugins.gen-nvim"),
 	require("plugins.obsidian"),
@@ -49,18 +48,20 @@ require("lazy").setup({
 	require("plugins.flash"), -- TODO: set this up to replace `s`
 	require("plugins.ghostty"),
 	require("plugins.grug-far"), -- TODO: watch the video
-	require("plugins.luasnip"),
+
 	require("plugins.mason-nvim"),
+	require("plugins.luasnip"),
 	require("plugins.noice"),
 	require("plugins.nvim-lint"),
 	require("plugins.outline"),
 	require("plugins.render-markdown"),
-	require("plugins.snacks"),
+
 	require("plugins.snipe"),
 	require("plugins.stay-centered"),
 	require("plugins.virt-column"),
 	require("plugins.atac"),
 	require("plugins.flash"),
+	require("plugins.opencode"),
 }, {
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the

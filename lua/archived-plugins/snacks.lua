@@ -42,10 +42,10 @@ return {
 			-- configured as <leader>sk but I run it too often
 			-- Sometimes I need to see if a keymap is already taken or not
 			{
-				"<M-k>",
+				"<leader>sk",
 				function()
 					Snacks.picker.keymaps({
-						layout = "vertical",
+						layout = "telescope",
 					})
 				end,
 				desc = "Keymaps",
@@ -77,6 +77,30 @@ return {
 					})
 				end,
 				desc = "[S]earch by [G]rep",
+			},
+			{
+				"<leader>sr",
+				function()
+					Snacks.picker.resume()
+				end,
+
+				desc = "[S]earch [R]esume",
+			},
+			{
+				"<S-l>",
+				function()
+					Snacks.picker.diagnostics()
+				end,
+				desc = "[look]",
+			},
+			{
+				"<leader>sh",
+				function()
+					Snacks.picker.help({
+						layout = "telescope",
+					})
+				end,
+				desc = "[S]earch [H]elp",
 			},
 			-- Navigate my buffers
 			-- {
@@ -196,12 +220,13 @@ return {
 						keys = {
 							-- to close the picker on ESC instead of going to normal mode,
 							-- add the following keymap to your config
-							["<Esc>"] = { "close", mode = { "n", "i" } },
+							-- ["<Esc>"] = { "close", mode = { "n", "i" } },
+							["q"] = { "close", mode = { "n" } },
 							-- I'm used to scrolling like this in LazyGit
-							["J"] = { "preview_scroll_down", mode = { "i", "n" } },
-							["K"] = { "preview_scroll_up", mode = { "i", "n" } },
-							["H"] = { "preview_scroll_left", mode = { "i", "n" } },
-							["L"] = { "preview_scroll_right", mode = { "i", "n" } },
+							-- ["J"] = { "preview_scroll_down", mode = { "i", "n" } },
+							-- ["K"] = { "preview_scroll_up", mode = { "i", "n" } },
+							-- ["H"] = { "preview_scroll_left", mode = { "i", "n" } },
+							-- ["L"] = { "preview_scroll_right", mode = { "i", "n" } },
 						},
 					},
 				},

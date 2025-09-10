@@ -1,5 +1,5 @@
 vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.g.maplocalleader = "\\"
 
 -- [[ Setting options ]]
 require("setup.options")
@@ -15,3 +15,5 @@ require("setup.lazy-bootstrap")
 
 -- [[ Configure and install plugins ]]
 require("setup.lazy-plugins")
+
+vim.keymap.set("n", "<leader>so", ":update<CR> :source<CR>")

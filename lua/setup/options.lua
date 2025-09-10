@@ -4,10 +4,7 @@
 
 -- Make line numbers default
 vim.opt.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
-
+-- You can also add relative line numbers, to help with jumping. Experiment for yourself to see if you like it! vim.opt.relativenumber = true
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = "a"
 
@@ -28,6 +25,18 @@ vim.opt.undofile = true
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+
+-- colorcolumn
+---- char = "|",
+-- char = "",
+-- char = "┇",
+-- char = "∶",
+-- char = "∷",
+-- char = "⋮",
+-- char = "",
+-- char = "󰮾",
+-- vim.opt.colorcolumn = "║"
+-- vim.opt.colorcolumn = ""
 
 -- Keep signcolumn on by default
 vim.opt.signcolumn = "yes"
@@ -57,6 +66,12 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+
+-- When text reaches this limit, it automatically wraps to the next line.
+-- This WILL NOT auto wrap existing lines, or if you paste a long line into a
+-- file it will not wrap it as well
+-- https://www.reddit.com/r/neovim/comments/1av26kw/i_tried_to_figure_it_out_but_i_give_up_how_do_i/
+vim.opt.textwidth = 150
 
 vim.opt.cmdheight = 1
 vim.opt.completeopt = { "menuone", "noselect" }
@@ -93,6 +108,7 @@ local function get_buffer_count()
 	end
 	return count
 end
+
 -- Function to update the winbar
 local function update_winbar()
 	local buffer_count = get_buffer_count()

@@ -49,13 +49,27 @@ How to's
 
 --]=====]
 --
+--
 return {
 	"kristijanhusak/vim-dadbod-ui",
+	enabled = true,
 	dependencies = {
-		{ "tpope/vim-dadbod", lazy = true },
-		{ "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
+		{
+			"tpope/vim-dadbod",
+			lazy = false,
+		},
+		{
+			"kristijanhusak/vim-dadbod-completion",
+			ft = { "sql", "mysql", "plsql" },
+			config = function()
+				-- Just for extra safety if db#resolve gets called without context
+				vim.g.db_completion_use_suggestions = 0
+			end,
+		},
 	},
-	keys = {},
+	keys = {
+		{ "<leader>D", "<cmd>toggle_dbui_tab<CR>", desc = "Toggle DBUI in tab" },
+	},
 	cmd = {
 		"DBUI",
 		"DBUIToggle",
@@ -89,11 +103,6 @@ return {
 			vim.api.nvim_command("tabnew | DBUI")
 		end
 
-		vim.keymap.set("n", "<leader>d", toggle_dbui_tab, { desc = "Toggle DBUI in tab" })
+		vim.keymap.set("n", "<leader>D", toggle_dbui_tab, { desc = "Toggle DBUI in tab" })
 	end,
-	-- config = function()
-	-- 	local dadbod_env = require("plugins.dadbod_env") -- adjust path if different
-	-- 	dadbod_env.load_direnv()
-	-- 	dadbod_env.setup()
-	-- end,
 }

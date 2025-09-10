@@ -1,6 +1,28 @@
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 -- The next two examples are both ways of writing commands in vim
+--
+---- testing ----
+-- local border = {
+--   { "🭽", "FloatBorder" },
+--   { "▔", "FloatBorder" },
+--   { "🭾", "FloatBorder" },
+--   { "▕", "FloatBorder" },
+--   { "🭿", "FloatBorder" },
+--   { "▁", "FloatBorder" },
+--   { "🭼", "FloatBorder" },
+--   { "▏", "FloatBorder" },
+-- }
+-- Always show the diagnostics window
+-- vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+-- 	group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
+-- 	callback = function()
+-- 		vim.diagnostic.open_float(nil, {
+-- 			focus = false,
+-- 			border = "rounded",
+-- 		})
+-- 	end,
+-- })
 
 --- Remove all trailing whitespace on save
 local TrimWhiteSpaceGrp = vim.api.nvim_create_augroup("TrimWhiteSpaceGrp", { clear = true })
@@ -28,15 +50,7 @@ pcall(vim.api.nvim_buf_set_var, 0, "diagnostics_visible", true)
 
 vim.api.nvim_create_user_command("ToggleDiagnostics", ToggleDiagnostics, {})
 
--- Highlight the yanked text
-vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlights the yanked (copied) text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-	callback = function()
-		vim.highlight.on_yank()
-	end,
-})
-
+-- commit spell good
 vim.api.nvim_create_autocmd("FileType", {
 	group = vim.api.nvim_create_augroup("wrap_spell", { clear = true }),
 	pattern = { "gitcommit", "markdown" },
@@ -50,6 +64,7 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.expandtab = true
 	end,
 })
+
 vim.api.nvim_create_autocmd("FileType", {
 	group = vim.api.nvim_create_augroup("wrap_markdowny", { clear = true }),
 	desc = "markdowny.nvim keymaps",
@@ -69,7 +84,7 @@ vim.api.nvim_create_autocmd("FileType", {
 		)
 		vim.keymap.set(
 			"v",
-			"<leader>mlk",
+			"<leader>ml",
 			":lua require('markdowny').link()<cr>",
 			{ buffer = 0, desc = "[m]ake [l]in[k]" }
 		)

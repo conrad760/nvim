@@ -1,0 +1,39 @@
+{
+  "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+  "runtime": {
+    "version": "LuaJIT"
+  },
+  "workspace": {
+    "checkThirdParty": false,
+    "library": [
+      "vim",
+      "${3rd}/luv/library"
+    ]
+  },
+  "diagnostics": {
+    "globals": [
+      "vim",
+      "Snacks",
+      "MiniFiles",
+      "require",
+      "pairs",
+      "ipairs",
+      "print",
+      "table",
+      "string",
+      "math",
+      "os",
+      "io",
+      "error",
+      "assert",
+      "type",
+      "next",
+      "tostring",
+      "tonumber",
+      "pcall",
+      "xpcall",
+      "setmetatable",
+      "getmetatable"
+    ]
+  }
+}
