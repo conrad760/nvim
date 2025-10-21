@@ -49,6 +49,11 @@ return {
 		-- Define inline code highlight for markdown
 		-- vim.cmd(string.format([[highlight RenderMarkdownCodeInline guifg=%s guibg=%s]], colorInline_bg, color_fg))
 		vim.cmd(string.format([[highlight RenderMarkdownCodeInline guifg=%s]], colorInline_bg))
+		
+		-- Additional highlights for HTML tags
+		vim.cmd([[highlight Bold gui=bold]])
+		vim.cmd([[highlight Italic gui=italic]])
+		vim.cmd([[highlight RenderMarkdownBullet guifg=]] .. colors["linkarzu_color02"])
 
 		-- Highlight for the heading and sign icons (symbol on the left)
 		-- I have the sign disabled for now, so this makes no effect
@@ -166,6 +171,67 @@ return {
 			comment = {
 				-- Turn on / off HTML comment concealing
 				conceal = false,
+			},
+			-- HTML tags whose start and end will be hidden and icon shown
+			tag = {
+				-- Paragraph
+				p = {
+					icon = "",
+					highlight = "Normal",
+				},
+				-- Preformatted text/code blocks
+				pre = {
+					icon = "",
+					highlight = "RenderMarkdownCode",
+				},
+				-- Unordered list
+				ul = {
+					icon = "",
+					highlight = "RenderMarkdownBullet",
+				},
+				-- Ordered list
+				ol = {
+					icon = "",
+					highlight = "RenderMarkdownBullet",
+				},
+				-- List item rendering
+				li = {
+					icon = "• ",
+					highlight = "RenderMarkdownBullet",
+				},
+				-- Code tag rendering  
+				code = {
+					icon = "",
+					highlight = "RenderMarkdownCodeInline",
+				},
+				-- Strong/Bold tag rendering
+				strong = {
+					icon = "",
+					highlight = "Bold",
+				},
+				-- Additional common HTML tags
+				em = {
+					icon = "",
+					highlight = "Italic",
+				},
+				b = {
+					icon = "",
+					highlight = "Bold",
+				},
+				i = {
+					icon = "",
+					highlight = "Italic",
+				},
+				-- Span (common in LeetCode)
+				span = {
+					icon = "",
+					highlight = "Normal",
+				},
+				-- Div
+				div = {
+					icon = "",
+					highlight = "Normal",
+				},
 			},
 		},
 		-- Add custom icons lamw26wmal

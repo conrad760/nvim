@@ -18,10 +18,7 @@ return {
 		},
 		["core.dirman"] = {
 			config = {
-				workspace = {
-					second_brain = "~/Documents/Second-Brain",
-					work = "~/Documents/work",
-				},
+				workspace = {},
 			},
 		},
 	},

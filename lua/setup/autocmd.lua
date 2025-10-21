@@ -164,3 +164,6 @@ vim.api.nvim_create_autocmd("VimResized", {
 	pattern = "*",
 	command = "tabdo wincmd =",
 })
+
+vim.opt.exrc = true
+vim.opt.secure = true

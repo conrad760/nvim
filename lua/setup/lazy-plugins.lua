@@ -42,7 +42,7 @@ require("lazy").setup({
 	require("plugins.gen-nvim"),
 	require("plugins.obsidian"),
 	require("plugins.nvim-window-picker"),
-	require("plugins.codeium"),
+	-- require("plugins.codeium"),
 	require("plugins.notify"),
 	require("plugins.colorizer-nvim"),
 	require("plugins.flash"), -- TODO: set this up to replace `s`

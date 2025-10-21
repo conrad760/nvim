@@ -7,13 +7,13 @@
 https://github.com/tpope/vim-dadbod
 Vim plugin for interacting with databases
 Connections are specified with a single URL
-:DB mysql://root:pass@mysql.home.linkarzu.com:3310 SHOW DATABASES;
+:DB mysql://user:pass@hostname:port SHOW DATABASES;
 
 https://github.com/kristijanhusak/vim-dadbod-ui
 To add a new dtabase, toggle DBUI, then hit capital `A` to add a new connection
-mysql://root:pass@mysql.home.linkarzu.com:3310
-mysql://root:pass@mariadb.home.linkarzu.com:3309/
-postgres://postgres:pass@postgres.home.linkarzu.com:5432/
+Example formats:
+mysql://user:pass@hostname:port
+postgres://user:pass@hostname:port/
 Then you will be asked for the name of the database that will show in the toogle
 
 https://github.com/kristijanhusak/vim-dadbod-completion
@@ -81,8 +81,7 @@ return {
 		vim.g.db_ui_win_position = "right"
 		vim.g.db_ui_use_nerd_fonts = 1
 		vim.g.db_ui_use_nvim_notify = 1
-		vim.g.db_ui_save_location = "~/.local/share/db_ui"
-		vim.g.db_ui_tmp_query_location = "~/.local/share/db_ui/dadbod/queries"
+		-- Removed hardcoded paths - will use plugin defaults
 		vim.g.db_ui_hide_schemas = { "pg_toast_temp.*" }
 
 		local function toggle_dbui_tab()

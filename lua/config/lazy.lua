@@ -10,7 +10,8 @@ end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
 -- Set the python3_host_prog variable
-vim.g.python3_host_prog = "~/.venvs/neovim/bin/python"
+-- Comment out to use system python, or set to a portable path if needed
+-- vim.g.python3_host_prog = "~/.venvs/neovim/bin/python"
 
 require("lazy").setup({
   spec = {

@@ -225,12 +225,7 @@ vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 vim.api.nvim_create_autocmd("BufRead", {
 	pattern = "*.md",
 	callback = function()
-		-- Get the full path of the current file
-		local file_path = vim.fn.expand("%:p")
-		-- Ignore files in my daily note directory
-		if file_path:match(os.getenv("HOME") .. "/github/obsidian_main/250%-daily/") then
-			return
-		end -- Avoid running zk multiple times for the same buffer
+		-- Avoid running zk multiple times for the same buffer
 		if vim.b.zk_executed then
 			return
 		end

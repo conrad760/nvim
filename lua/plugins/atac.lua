@@ -14,9 +14,7 @@ return {
 	},
 	config = function()
 		require("atac").setup({
-			dir = "~/.config/atac", -- Ensure this directory exists and is writable.
-			-- Optionally add a debug flag if the plugin supports it:
-			-- debug = true,
+			-- dir will use default plugin path
 		})
 		vim.notify("Atac has been configured", vim.log.levels.INFO)
 	end,

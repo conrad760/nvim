@@ -23,16 +23,7 @@ return {
 		"nvim-lua/plenary.nvim",
 	},
 	opts = {
-		workspaces = {
-			{
-				name = "personal",
-				path = "~/Documents/Second-Brain",
-			},
-			-- {
-			-- 	name = "work",
-			-- 	path = "~/vaults/work",
-			-- },
-		},
+		workspaces = {},
 		new_notes_location = "current_dir",
 		daily_notes = {
 			-- Optional, if you keep daily notes in a separate directory.

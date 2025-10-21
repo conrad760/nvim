@@ -6,7 +6,9 @@
 -- Function to load colors from the external file
 local function load_colors()
 	local colors = {}
-	local active_file = os.getenv("HOME") .. "/.config/nvim/lua/config/active-colorscheme.sh"
+	-- Use vim.fn.stdpath to get the config directory portably
+	local config_dir = vim.fn.stdpath("config")
+	local active_file = config_dir .. "/lua/config/active-colorscheme.sh"
 
 	local file = io.open(active_file, "r")
 	if not file then
