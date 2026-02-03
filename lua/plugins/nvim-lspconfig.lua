@@ -7,9 +7,19 @@ return { -- LSP Configuration & Plugins
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		-- Useful status updates for LSP.
 		{ "j-hui/fidget.nvim", opts = {} },
-		-- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
+		-- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
 		-- used for completion, annotations and signatures of Neovim apis
-		{ "folke/neodev.nvim", opts = {} },
+		-- (replaces deprecated neodev.nvim)
+		{
+			"folke/lazydev.nvim",
+			ft = "lua",
+			opts = {
+				library = {
+					-- Load luvit types when the `vim.uv` word is found
+					{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+				},
+			},
+		},
 	},
 	opts = {
 		servers = {
@@ -97,7 +107,39 @@ return { -- LSP Configuration & Plugins
 
 				-- Opens a popup that displays documentation about the word under your cursor
 				--  See `:help K` for why this keymap.
-				map("K", vim.lsp.buf.hover, "Hover Documentation")
+				map("K", function()
+					local params = vim.lsp.util.make_position_params()
+					
+					-- Get references first
+					vim.lsp.buf_request(0, "textDocument/references", params, function(err, result)
+						local ref_count = 0
+						if not err and result then
+							ref_count = #result
+						end
+						
+						-- Then get hover info and prepend reference count
+						vim.lsp.buf_request(0, "textDocument/hover", params, function(hover_err, hover_result)
+							if hover_err or not hover_result or not hover_result.contents then
+								vim.notify("No hover information available", vim.log.levels.WARN)
+								return
+							end
+							
+							-- Convert hover contents to markdown lines
+							local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(hover_result.contents)
+							
+							-- Prepend reference count as the first line
+							table.insert(markdown_lines, 1, string.format("**References: %d**", ref_count))
+							table.insert(markdown_lines, 2, "")
+							
+							-- Display in floating window
+							vim.lsp.util.open_floating_preview(markdown_lines, "markdown", {
+								border = "rounded",
+								focusable = true,
+								focus = false,
+							})
+						end)
+					end)
+				end, "Hover Documentation + References")
 
 				-- WARN: This is not Goto Definition, this is Goto Declaration.
 				--  For example, in C this would take you to the header.
@@ -159,6 +201,7 @@ return { -- LSP Configuration & Plugins
 		--  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
 		--  - settings (table): Override the default settings passed when initializing the server.
 		--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+		-- LSP servers only (not formatters/linters)
 		local servers = {
 			nil_ls = {},
 			gopls = {
@@ -199,7 +242,6 @@ return { -- LSP Configuration & Plugins
 					},
 				},
 			},
-			stylua = {}, -- Used to format Lua code
 			dockerls = {},
 			jsonls = {},
 			marksman = {},
@@ -207,11 +249,7 @@ return { -- LSP Configuration & Plugins
 			rust_analyzer = {},
 			tailwindcss = {},
 			templ = {},
-			golines = {},
-			gofumpt = {},
-			goimports = {},
 			eslint = {},
-			revive = {},
 			html = {},
 			ts_ls = {},
 			elmls = {
@@ -219,6 +257,15 @@ return { -- LSP Configuration & Plugins
 				onlyUpdateDiagnosticsOnSave = false, -- Update diagnostics on save only
 				suggestSpecs = true,
 			},
+		}
+
+		-- Formatters and linters (not LSP servers) - installed via mason-tool-installer
+		local tools = {
+			"stylua",    -- Lua formatter
+			"golines",   -- Go line length formatter
+			"gofumpt",   -- Go formatter
+			"goimports", -- Go imports formatter
+			"revive",    -- Go linter
 		}
 
 		-- Ensure the servers and tools above are installed
@@ -232,7 +279,7 @@ return { -- LSP Configuration & Plugins
 		-- You can add other tools here that you want Mason to install
 		-- for you, so that they are available from within Neovim.
 		local ensure_installed = vim.tbl_keys(servers or {})
-		vim.list_extend(ensure_installed, {})
+		vim.list_extend(ensure_installed, tools) -- Add formatters/linters
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 		require("mason-lspconfig").setup({
