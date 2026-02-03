@@ -1,16 +1,26 @@
--- Filename: ~/github/dotfiles-latest/neovim/neobean/lua/plugins/colorizer-nvim.lua
--- ~/github/dotfiles-latest/neovim/neobean/lua/plugins/colorizer-nvim.lua
-
--- https://github.com/norcalli/nvim-colorizer.lua
--- This plugin allows me to see the colors of hex code inside files
-
--- I'm replacing this plugin with mini-hipatterns, installed as a LazyExtra
+-- Replaced norcalli/nvim-colorizer.lua (unmaintained) with NvChad fork
+-- https://github.com/NvChad/nvim-colorizer.lua
 
 return {
-	"norcalli/nvim-colorizer.lua",
-	-- I'm replacing this plugin with mini-hipatterns, installed as a LazyExtra
-	enabled = true,
+	"NvChad/nvim-colorizer.lua",
+	event = { "BufReadPre", "BufNewFile" },
 	config = function()
-		require("colorizer").setup()
+		require("colorizer").setup({
+			filetypes = { "*" },
+			user_default_options = {
+				RGB = true,
+				RRGGBB = true,
+				names = false, -- "Name" codes like Blue
+				RRGGBBAA = true,
+				AARRGGBB = true,
+				rgb_fn = true, -- CSS rgb() and rgba()
+				hsl_fn = true, -- CSS hsl() and hsla()
+				css = true,
+				css_fn = true,
+				mode = "background", -- "foreground", "background", "virtualtext"
+				tailwind = true,
+				virtualtext = "",
+			},
+		})
 	end,
 }

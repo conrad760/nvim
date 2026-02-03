@@ -1,6 +1,11 @@
+-- Replaced vim-bbye (unmaintained) with mini.bufremove
 return {
-	"moll/vim-bbye",
+	"echasnovski/mini.bufremove",
+	version = false,
 	config = function()
-		vim.keymap.set("n", "<leader>cc", "<cmd>:Bdelete!<CR>", { desc = "close the current buffer" })
+		require("mini.bufremove").setup()
+		vim.keymap.set("n", "<leader>cc", function()
+			require("mini.bufremove").delete(0, true)
+		end, { desc = "close the current buffer" })
 	end,
 }

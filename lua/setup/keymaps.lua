@@ -34,8 +34,8 @@ vim.keymap.set("n", "<leader>tl", ":tabs<CR>", { desc = "list tabs" })
 
 ---- Navigate buffers
 ---
-vim.keymap.set("n", "[d", vim.diagnostic.get_prev, { desc = "Go to previous [D]iagnostic message" })
-vim.keymap.set("n", "]d", vim.diagnostic.get_next, { desc = "Go to next [D]iagnostic message" })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
 vim.keymap.set("n", "<leader>l", vim.diagnostic.open_float, { desc = "Show diagnostic error messages" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
@@ -57,25 +57,16 @@ vim.keymap.set("t", "<C-l>", "<C-\\><C-N><C-w>l", { silent = true })
 -- NOTE: Moving the plugins key mapping to the lazy setup unless I figure out a better way
 -- Plugins --
 
----- Telescope
-vim.keymap.set(
-	"n",
-	"<leader>go",
-	"<cmd>Telescope git_status<cr>",
-	{ desc = "Open changed file", noremap = true, silent = true }
-)
-vim.keymap.set(
-	"n",
-	"<leader>gb",
-	"<cmd>Telescope git_branches<cr>",
-	{ desc = "Checkout branch", noremap = true, silent = true }
-)
-vim.keymap.set(
-	"n",
-	"<leader>gc",
-	"<cmd>Telescope git_commits<cr>",
-	{ desc = "Checkout commits", noremap = true, silent = true }
-)
+---- Git (using Snacks picker)
+vim.keymap.set("n", "<leader>go", function()
+	Snacks.picker.git_status()
+end, { desc = "Git status", noremap = true, silent = true })
+vim.keymap.set("n", "<leader>gb", function()
+	Snacks.picker.git_branches()
+end, { desc = "Git branches", noremap = true, silent = true })
+vim.keymap.set("n", "<leader>gc", function()
+	Snacks.picker.git_log()
+end, { desc = "Git commits", noremap = true, silent = true })
 ---- Twiliight
 vim.keymap.set("n", "<leader>tt", "<cmd>Twilight<cr>", { desc = "[t]oggle [T]wiliight", noremap = true, silent = true })
 ---- Custom

@@ -1,41 +1,73 @@
-return { -- Highlight, edit, and navigate code
+return {
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
-	opts = {
-		ensure_installed = { 
-			"go", "bash", "c", "html", "lua", "luadoc", "markdown", "vim", "vimdoc",
-			"javascript", "typescript", "tsx", "json", "yaml", "toml", "css", "scss",
-			"python", "rust", "java", "cpp", "cmake", "make", "dockerfile", "git_config",
-			"gitignore", "diff", "regex", "sql", "graphql", "proto", "xml"
-		},
-		-- Autoinstall languages that are not installed
-		auto_install = true,
-		highlight = {
-			enable = true,
-			-- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-			--  If you are experiencing weird indenting issues, add the language to
-			--  the list of additional_vim_regex_highlighting and disabled languages for indent.
-			additional_vim_regex_highlighting = { "ruby" },
-		},
-		indent = { enable = true, disable = { "ruby" } },
-	},
-	config = function(_, opts)
-		-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
+	lazy = false,
+	priority = 1000,
+	config = function(plugin)
+		-- Add plugin path to Lua search path (needed for Nix)
+		local plugin_dir = vim.fn.expand("~/.local/share/nvim/lazy/nvim-treesitter")
+		local lua_path = plugin_dir .. "/lua/?.lua;" .. plugin_dir .. "/lua/?/init.lua;"
+		package.path = lua_path .. package.path
 
-		-- Prefer git instead of curl in order to improve connectivity in some environments
-		require("nvim-treesitter.install").prefer_git = true
-		---@diagnostic disable-next-line: missing-fields
-		require("nvim-treesitter.configs").setup(opts)
+		-- New nvim-treesitter API (2024+)
+		-- Highlighting is now built into Neovim via vim.treesitter
+		-- The plugin now only handles parser installation
 
-		-- Enable folding using Treesitter
-		vim.wo.foldmethod = "expr" -- Use expression-based folding
-		vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- Treesitter folding expression
+		-- Configure install directory and add to runtimepath
+		local install_dir = vim.fn.stdpath("data") .. "/site"
+		vim.opt.runtimepath:append(install_dir)
 
-		-- There are additional nvim-treesitter modules that you can use to interact
-		-- with nvim-treesitter. You should go explore a few and see what interests you:
-		--
-		--    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-		--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-		--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+		require("nvim-treesitter.config").setup({
+			install_dir = install_dir,
+		})
+
+		-- Install parsers
+		local parsers_to_install = {
+			"go", "gomod", "gosum", "gowork", "gotmpl", -- Go ecosystem
+			"bash", "c", "html", "lua", "luadoc", "markdown", "markdown_inline",
+			"vim", "vimdoc", "javascript", "typescript", "tsx", "json", "yaml", "toml",
+			"css", "scss", "python", "rust", "java", "cpp", "cmake", "make",
+			"dockerfile", "git_config", "gitignore", "diff", "regex", "sql",
+			"graphql", "proto", "xml", "norg", "comment", "nix",
+		}
+
+		-- Install missing parsers asynchronously
+		vim.api.nvim_create_autocmd("VimEnter", {
+			callback = function()
+				local installed = require("nvim-treesitter.config").get_installed()
+				local installed_set = {}
+				for _, p in ipairs(installed) do
+					installed_set[p] = true
+				end
+
+				local to_install = {}
+				for _, parser in ipairs(parsers_to_install) do
+					if not installed_set[parser] then
+						table.insert(to_install, parser)
+					end
+				end
+
+				if #to_install > 0 then
+					vim.cmd("TSInstall " .. table.concat(to_install, " "))
+				end
+			end,
+			once = true,
+		})
+
+		-- Treesitter-based folding
+		vim.opt.foldmethod = "expr"
+		vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+		vim.opt.foldlevel = 99
+
+		-- Enable treesitter highlighting for all supported filetypes
+		vim.api.nvim_create_autocmd("FileType", {
+			callback = function(args)
+				local ok = pcall(vim.treesitter.start, args.buf)
+				if ok then
+					-- Enable indentation via treesitter
+					vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+				end
+			end,
+		})
 	end,
 }

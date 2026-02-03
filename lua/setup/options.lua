@@ -81,7 +81,6 @@ vim.opt.hlsearch = true
 vim.opt.smartindent = true
 vim.opt.swapfile = false
 vim.opt.termguicolors = true
-vim.opt.undofile = true
 vim.opt.writebackup = false
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
@@ -89,13 +88,17 @@ vim.opt.tabstop = 2
 vim.opt.wrap = false
 vim.opt.sidescrolloff = 2
 vim.opt.guifont = "Monaco:h10"
-vim.opt.foldlevel = 8
+vim.opt.foldlevel = 99 -- Start with all folds open (treesitter sets this too)
 
 vim.opt.shortmess:append("c")
 
 --Show buffer count
 vim.cmd(string.format([[highlight WinBar1 guifg=%s]], "#c4b28a"))
 vim.cmd(string.format([[highlight WinBar2 guifg=%s]], "#8a9a7b"))
+
+-- Cache hostname (doesn't change during session)
+local cached_hostname = vim.fn.hostname()
+
 -- Function to get the number of open buffers using the :ls command
 local function get_buffer_count()
 	local buffers = vim.fn.execute("ls")
@@ -118,7 +121,7 @@ local function update_winbar()
 		.. ") "
 		.. "%#WinBar1#"
 		.. "%*%=%#WinBar2#"
-		.. vim.fn.systemlist("hostname")[1]
+		.. cached_hostname
 end
 -- Autocmd to update the winbar on BufEnter and WinEnter events
 vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter" }, {

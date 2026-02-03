@@ -1,17 +1,18 @@
 require("lazy").setup({
+	root = vim.g.lazy_root,
 	require("plugins.nvim-web-devicons"), -- icon pack
 	require("plugins.plenary_nvim"), -- Useful lua functions used by lots of plugins
 	require("plugins.vim-unimpaired"), -- handy bracket mappings
 	require("plugins.vim-fugitive"), -- all the git goodness
 	require("plugins.dadbod"), -- database integration
-	require("plugins.dbee"), -- database integration
+	-- require("plugins.dbee"), -- Disabled: using dadbod instead
 	require("plugins.vim-tmux-navigator"), -- navigate between tmux panes
 	require("plugins.nvim-lspconfig"), -- Automatically install LSPs and related tools
 	require("plugins.nvim-cmp"),
 
 	require("plugins.vim-bbye"),
 	require("plugins.lualine_nvim"),
-	require("plugins.nvim-autopairs"),
+	-- require("plugins.nvim-autopairs"), -- Disabled: using mini.pairs instead
 	require("plugins.neogit"),
 	require("plugins.which-key_nvim"),
 	require("plugins.snacks-enhanced"), -- Replaces Telescope with Snacks picker
@@ -24,7 +25,7 @@ require("lazy").setup({
 
 	require("plugins.conform"),
 	require("plugins.debug"),
-	require("plugins.committia"),
+	-- require("plugins.committia"), -- Redundant with neogit
 	require("plugins.zen-mode_nvim"),
 	require("plugins.markdown-preview"),
 	require("plugins.markdowny_nvim"),
@@ -32,7 +33,7 @@ require("lazy").setup({
 	require("plugins.twilight_nvim"),
 	require("plugins.go_nvim"),
 	require("plugins.nvim-goc"),
-	require("plugins.mini"),
+	-- require("plugins.mini"), -- Archived: using separate mini-* files instead
 	require("plugins.mini-files"), -- TODO: needs setup
 	require("plugins.mini-indentscope"),
 	require("plugins.mini-pairs"),
@@ -40,9 +41,9 @@ require("lazy").setup({
 	require("plugins.diffview_nvim"),
 	require("plugins.neorg"),
 	require("plugins.gen-nvim"),
-	require("plugins.obsidian"),
+	-- require("plugins.obsidian"), -- Disabled
 	require("plugins.nvim-window-picker"),
-	-- require("plugins.codeium"),
+	require("plugins.codeium"),
 	require("plugins.notify"),
 	require("plugins.colorizer-nvim"),
 	require("plugins.flash"), -- TODO: set this up to replace `s`
@@ -52,15 +53,14 @@ require("lazy").setup({
 	require("plugins.mason-nvim"),
 	require("plugins.luasnip"),
 	require("plugins.noice"),
-	require("plugins.nvim-lint"),
+	-- require("plugins.nvim-lint"), -- Disabled: using lint.lua instead
 	require("plugins.outline"),
 	require("plugins.render-markdown"),
 
-	require("plugins.snipe"),
-	require("plugins.stay-centered"),
+	-- require("plugins.snipe"), -- Disabled
+	-- require("plugins.stay-centered"), -- Replaced with vim.opt.scrolloff = 999 in options.lua
 	require("plugins.virt-column"),
-	require("plugins.atac"),
-	require("plugins.flash"),
+	-- require("plugins.atac"), -- Disabled
 	require("plugins.opencode"),
 }, {
 	ui = {

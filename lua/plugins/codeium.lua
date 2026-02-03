@@ -1,5 +1,7 @@
+-- Note: Exafunction/codeium.nvim was renamed to windsurf.nvim
+-- Using the maintained version
 return {
-	"Exafunction/codeium.nvim",
+	"Exafunction/windsurf.nvim",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"hrsh7th/nvim-cmp",
