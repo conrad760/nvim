@@ -223,23 +223,55 @@ vim.api.nvim_create_user_command("ShowComputerModel", function()
 	print("Computer Model: " .. model)
 end, {})
 
--- Auto update plugins at startup
--- Tried to add this vimenter autocmd in the autocmds.lua file but it was never
--- triggered, this is because if I understand correctly Lazy.nvim delays the
--- loading of autocmds.lua until after VeryLazy or even after VimEnter
--- The fix is to add the autocmd to a file that’s loaded before VimEnter,
--- such as options.lua
--- https://github.com/LazyVim/LazyVim/issues/2592#issuecomment-2015093693
--- Only upate if there are updates
+-- Auto update plugins weekly on Fridays
+-- Only update if there are updates
 -- https://github.com/folke/lazy.nvim/issues/702#issuecomment-1903484213
 local function augroup(name)
 	return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
 end
+
+-- Check if today is Friday and we haven't updated this week
+local function should_update_plugins()
+	local day_of_week = tonumber(os.date("%w")) -- 0=Sunday, 5=Friday
+	local last_update = vim.fn.stdpath("data") .. "/last_plugin_update"
+	local current_week = os.date("%Y-W%V") -- Year-Week format
+	
+	-- Check if it's Friday (day 5)
+	if day_of_week ~= 5 then
+		return false
+	end
+	
+	-- Check if we already updated this week
+	local file = io.open(last_update, "r")
+	if file then
+		local saved_week = file:read("*a")
+		file:close()
+		if saved_week == current_week then
+			return false -- Already updated this week
+		end
+	end
+	
+	return true
+end
+
+-- Save that we updated this week
+local function mark_updated()
+	local last_update = vim.fn.stdpath("data") .. "/last_plugin_update"
+	local current_week = os.date("%Y-W%V")
+	local file = io.open(last_update, "w")
+	if file then
+		file:write(current_week)
+		file:close()
+	end
+end
+
 vim.api.nvim_create_autocmd("VimEnter", {
 	group = augroup("autoupdate"),
 	callback = function()
-		if require("lazy.status").has_updates then
+		if should_update_plugins() and require("lazy.status").has_updates then
+			vim.notify("Updating plugins (weekly Friday update)...", vim.log.levels.INFO)
 			require("lazy").update({ show = false })
+			mark_updated()
 		end
 	end,
 })

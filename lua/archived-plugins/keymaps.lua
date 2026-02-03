@@ -1330,26 +1330,7 @@ vim.keymap.set("n", "<leader>iR", function()
 	end)
 end, { desc = "[P]Rename image under cursor" })
 
--- HACK: Upload images from Neovim to Imgur
--- https://youtu.be/Lzl_0SzbUBo
---
--- Removed imgur upload functionality (external dependency)
 
-				}, false, {})
-				-- require("image").clear()
-				vim.cmd("edit!")
-				vim.cmd("normal! dd")
-			else
-				vim.api.nvim_echo({
-					{ "Failed to delete image file:\n", "ErrorMsg" },
-					{ absolute_image_path, "ErrorMsg" },
-				}, false, {})
-			end
-		else
-			vim.api.nvim_echo({ { "Image deletion canceled.", "Normal" } }, false, {})
-		end
-	end)
-end, { desc = "[P](macOS) Delete image file under cursor" })
 
 -- ############################################################################
 
