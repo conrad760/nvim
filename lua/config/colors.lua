@@ -38,5 +38,29 @@ if _G.vim then
 	end
 end
 
--- Return the colors table for external usage (like wezterm)
-return colors
+-- Helper functions to apply colors to specific UI components
+local M = {}
+
+-- Copy all color values to M
+for k, v in pairs(colors) do
+	M[k] = v
+end
+
+-- Apply colors to debug UI
+M.apply_to_debug_ui = function()
+	vim.api.nvim_set_hl(0, "DapBreakpoint", { fg = M.linkarzu_color03 or "#e06c75" })
+	vim.api.nvim_set_hl(0, "DapBreakpointCondition", { fg = M.linkarzu_color24 or "#f7bb3b" })
+	vim.api.nvim_set_hl(0, "DapStopped", { fg = M.linkarzu_color02 or "#98c379", bg = M.linkarzu_color13 or "#31353f" })
+	vim.api.nvim_set_hl(0, "DapBreakpointRejected", { fg = M.linkarzu_color04 or "#c678dd" })
+	vim.api.nvim_set_hl(0, "DapLogPoint", { fg = M.linkarzu_color01 or "#61afef" })
+end
+
+-- Apply colors to winbar (already done in options.lua, but keeping for reference)
+M.apply_to_winbar = function()
+	vim.cmd(string.format([[highlight WinBar1 guifg=%s]], M.linkarzu_color03 or "#61afef"))
+	vim.cmd(string.format([[highlight WinBar2 guifg=%s]], M.linkarzu_color02 or "#98c379"))
+	vim.cmd(string.format([[highlight WinBar3 guifg=%s gui=bold]], M.linkarzu_color24 or "#e5c07b"))
+end
+
+-- Return the module for external usage
+return M
