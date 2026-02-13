@@ -317,35 +317,6 @@ return {
 
 		ls.add_snippets("markdown", snippets)
 
-		-- #####################################################################
-		--                         all the filetypes
-		-- #####################################################################
-		ls.add_snippets("all", {
-			s({
-				trig = "workflow",
-				name = "Add this -> lamw26wmal",
-				desc = "Add this -> lamw26wmal",
-			}, {
-				t("lamw26wmal"),
-			}),
-
-			s({
-				trig = "lam",
-				name = "Add this -> lamw26wmal",
-				desc = "Add this -> lamw26wmal",
-			}, {
-				t("lamw26wmal"),
-			}),
-
-			s({
-				trig = "mw25",
-				name = "Add this -> lamw26wmal",
-				desc = "Add this -> lamw26wmal",
-			}, {
-				t("lamw26wmal"),
-			}),
-		})
-
 		return opts
 	end,
 }

@@ -49,7 +49,7 @@ return {
 		-- Define inline code highlight for markdown
 		-- vim.cmd(string.format([[highlight RenderMarkdownCodeInline guifg=%s guibg=%s]], colorInline_bg, color_fg))
 		vim.cmd(string.format([[highlight RenderMarkdownCodeInline guifg=%s]], colorInline_bg))
-		
+
 		-- Additional highlights for HTML tags
 		vim.cmd([[highlight Bold gui=bold]])
 		vim.cmd([[highlight Italic gui=italic]])
@@ -195,7 +195,7 @@ return {
 					icon = "• ",
 					highlight = "RenderMarkdownBullet",
 				},
-				-- Code tag rendering  
+				-- Code tag rendering
 				code = {
 					icon = "",
 					highlight = "RenderMarkdownCodeInline",
@@ -230,7 +230,7 @@ return {
 				},
 			},
 		},
-		-- Add custom icons lamw26wmal
+		-- Add custom icons
 		link = {
 			custom = {
 				youtu = { pattern = "youtu%.be", icon = "󰗃 " },
