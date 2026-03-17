@@ -135,6 +135,9 @@ vim.api.nvim_create_autocmd("FileType", {
 	command = "setlocal spell",
 })
 
+-- AI-powered commit message drafts from staged diff (Ollama)
+require("config.modules.ai-commit").setup()
+
 -- Markdown settings
 local markdown_group = vim.api.nvim_create_augroup("_markdown", { clear = true })
 
