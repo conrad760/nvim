@@ -10,18 +10,17 @@ return {
 
                 let g:committia_hooks = {}
                 function! g:committia_hooks.edit_open(info)
-                " Additional settings
-                setlocal spell
-
-                " If no commit message, start with insert mode
-                if a:info.vcs ==# 'git' && getline(1) ==# ''
-                    startinsert
-                    endif
+                    " Additional settings
+                    setlocal spell
 
                     " Scroll the diff window from insert mode
-                    " Map <C-n> and <C-p>
+                    " Map <C-u> and <C-d>
                     imap <buffer><C-u> <Plug>(committia-scroll-diff-down-half)
                     imap <buffer><C-d> <Plug>(committia-scroll-diff-up-half)
+
+                    " Scroll the diff window from normal mode
+                    nmap <buffer><C-u> <Plug>(committia-scroll-diff-down-half)
+                    nmap <buffer><C-d> <Plug>(committia-scroll-diff-up-half)
                 endfunction
             ]])
 	end,

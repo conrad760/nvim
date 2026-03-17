@@ -25,7 +25,7 @@ require("lazy").setup({
 
 	require("plugins.conform"),
 	require("plugins.debug"),
-	-- require("plugins.committia"), -- Redundant with neogit
+	require("plugins.committia"), -- Diff split view for git commit
 	require("plugins.zen-mode_nvim"),
 	require("plugins.markdown-preview"),
 	require("plugins.markdowny_nvim"),
