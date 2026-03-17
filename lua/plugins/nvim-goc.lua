@@ -1,5 +1,6 @@
 return {
 	"rafaelsq/nvim-goc.lua",
+	enabled = false, -- disabled: requires removed nvim-treesitter.ts_utils module
 	event = "VeryLazy",
 	ft = "go",
 	config = function()
