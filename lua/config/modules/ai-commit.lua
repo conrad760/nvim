@@ -4,10 +4,10 @@ M.config = {
 	max_diff_chars = 4000, -- budget for single-pass mode
 	max_file_chars = 1500, -- per-file budget before truncation
 	two_pass_threshold = 6000, -- raw diff size that triggers two-pass mode
-	host = nil, -- falls back to gen.nvim config, then "localhost"
-	port = nil, -- falls back to gen.nvim config, then "11434"
-	model_fast = "llama3.2", -- fast model for file-level summaries (pass 1)
-	model_large = "llama3.2", -- quality model for final synthesis (pass 2)
+	host = nil, -- falls back to gen.nvim, then "localhost"
+	port = nil, -- falls back to gen.nvim, then "11434"
+	model_fast = "llama3.2", -- pass-1 file summaries
+	model_large = "llama3.2", -- pass-2 synthesis / single-pass
 }
 
 -- Files to completely exclude from diffs (noise, generated, binaries)
@@ -34,6 +34,10 @@ local ignore_patterns = {
 	-- Binary indicators
 	"Binary files",
 }
+
+-- ──────────────────────────────────────────────────────────────
+-- Prompts
+-- ──────────────────────────────────────────────────────────────
 
 local prompt_template = [[You are a git commit message generator. Based on the following staged diff, generate a commit message following the Conventional Commits format.
 
@@ -83,7 +87,7 @@ Changed files and summaries:
 -- Helpers
 -- ──────────────────────────────────────────────────────────────
 
---- Resolve a config value by checking our config, then gen.nvim, then a fallback.
+--- Resolve a config value: our config -> gen.nvim -> fallback.
 ---@param key string
 ---@param fallback string
 ---@return string
@@ -98,6 +102,29 @@ local function resolve(key, fallback)
 	return fallback
 end
 
+--- Format byte count for display.
+---@param bytes number
+---@return string
+local function format_bytes(bytes)
+	if bytes < 1024 then
+		return bytes .. "B"
+	elseif bytes < 1024 * 1024 then
+		return string.format("%.1fKB", bytes / 1024)
+	else
+		return string.format("%.1fMB", bytes / 1024 / 1024)
+	end
+end
+
+--- Clean up an LLM response: trim whitespace, strip markdown fences.
+---@param text string
+---@return string
+local function clean_response(text)
+	local msg = text:gsub("^%s+", ""):gsub("%s+$", "")
+	msg = msg:gsub("^```%w*\n?", ""):gsub("\n?```$", "")
+	msg = msg:gsub("^%s+", ""):gsub("%s+$", "")
+	return msg
+end
+
 --- Check if a file path matches any ignore pattern.
 ---@param path string
 ---@return boolean
@@ -110,6 +137,10 @@ local function should_ignore(path)
 	return false
 end
 
+-- ──────────────────────────────────────────────────────────────
+-- Diff parsing and filtering
+-- ──────────────────────────────────────────────────────────────
+
 --- Parse a unified diff into per-file chunks.
 ---@param raw_diff string
 ---@return table[] list of { file: string, diff: string }
@@ -121,7 +152,6 @@ local function parse_diff_files(raw_diff)
 	for line in raw_diff:gmatch("([^\n]*)\n?") do
 		local file = line:match("^diff %-%-git a/.+ b/(.+)$")
 		if file then
-			-- Flush previous file
 			if current_file then
 				table.insert(files, {
 					file = current_file,
@@ -134,7 +164,6 @@ local function parse_diff_files(raw_diff)
 			table.insert(current_lines, line)
 		end
 	end
-	-- Flush last file
 	if current_file then
 		table.insert(files, {
 			file = current_file,
@@ -144,9 +173,9 @@ local function parse_diff_files(raw_diff)
 	return files
 end
 
---- Filter and budget-truncate diff files.
----@param files table[] from parse_diff_files
----@return table[] filtered list, boolean any_truncated
+--- Filter files and apply per-file truncation.
+---@param files table[]
+---@return table[] filtered, boolean any_truncated
 local function filter_and_truncate(files)
 	local filtered = {}
 	local any_truncated = false
@@ -154,7 +183,6 @@ local function filter_and_truncate(files)
 	for _, f in ipairs(files) do
 		if not should_ignore(f.file) then
 			if #f.diff > M.config.max_file_chars then
-				-- Keep the header and as many hunks as fit in the budget
 				f.diff = f.diff:sub(1, M.config.max_file_chars) .. "\n... (truncated)"
 				any_truncated = true
 			end
@@ -164,9 +192,9 @@ local function filter_and_truncate(files)
 	return filtered, any_truncated
 end
 
---- Reassemble filtered file diffs into a single string, respecting total budget.
+--- Reassemble file diffs into a single string, respecting a total budget.
 ---@param files table[]
----@return string combined_diff, boolean truncated
+---@return string combined, boolean truncated
 local function assemble_diff(files)
 	local parts = {}
 	local total = 0
@@ -175,7 +203,6 @@ local function assemble_diff(files)
 	for _, f in ipairs(files) do
 		if total + #f.diff > M.config.max_diff_chars then
 			truncated = true
-			-- Try to fit a partial
 			local remaining = M.config.max_diff_chars - total
 			if remaining > 200 then
 				table.insert(parts, f.diff:sub(1, remaining) .. "\n... (truncated)")
@@ -192,26 +219,23 @@ end
 -- Diff retrieval
 -- ──────────────────────────────────────────────────────────────
 
---- Get the staged diff, pre-filtered and structured.
----@param callback fun(files: table[]|nil, raw_size: number)
-local function get_staged_diff(callback)
+--- Get the staged diff as raw text.
+---@param callback fun(raw_diff: string|nil)
+local function get_staged_diff_raw(callback)
 	vim.system({ "git", "diff", "--cached" }, { text = true }, function(result)
 		if result.code ~= 0 or not result.stdout or result.stdout == "" then
-			callback(nil, 0)
-			return
+			callback(nil)
+		else
+			callback(result.stdout)
 		end
-		local raw_size = #result.stdout
-		local files = parse_diff_files(result.stdout)
-		local filtered = filter_and_truncate(files)
-		callback(filtered, raw_size)
 	end)
 end
 
 -- ──────────────────────────────────────────────────────────────
--- Ollama communication
+-- Ollama API
 -- ──────────────────────────────────────────────────────────────
 
---- Call Ollama with a prompt and return the response text.
+--- Call Ollama with a prompt.
 ---@param prompt string
 ---@param model string
 ---@param callback fun(response: string|nil, err: string|nil)
@@ -256,18 +280,15 @@ local function call_ollama(prompt, model, callback)
 			callback(nil, "Ollama returned no response field: " .. (result.stdout or ""):sub(1, 200))
 			return
 		end
-		-- Clean up: trim whitespace, strip markdown fences
-		local msg = decoded.response:gsub("^%s+", ""):gsub("%s+$", "")
-		msg = msg:gsub("^```%w*\n?", ""):gsub("\n?```$", "")
-		msg = msg:gsub("^%s+", ""):gsub("%s+$", "")
-		callback(msg, nil)
+		callback(clean_response(decoded.response), nil)
 	end)
 end
 
 -- ──────────────────────────────────────────────────────────────
--- Single-pass: small diffs
+-- Generation strategies
 -- ──────────────────────────────────────────────────────────────
 
+--- Single-pass generation for small diffs.
 ---@param files table[]
 ---@param callback fun(message: string|nil, err: string|nil)
 local function single_pass(files, callback)
@@ -283,10 +304,7 @@ local function single_pass(files, callback)
 	call_ollama(prompt, model, callback)
 end
 
--- ──────────────────────────────────────────────────────────────
--- Two-pass: large diffs (map file summaries → synthesize)
--- ──────────────────────────────────────────────────────────────
-
+--- Two-pass generation for large diffs: summarize per file, then synthesize.
 ---@param files table[]
 ---@param callback fun(message: string|nil, err: string|nil)
 local function two_pass(files, callback)
@@ -295,24 +313,17 @@ local function two_pass(files, callback)
 
 	vim.schedule(function()
 		vim.notify(
-			string.format("Large diff (%d files) — using two-pass summarization", #files),
+			string.format("Large diff — two-pass summarization (%d files)", #files),
 			vim.log.levels.INFO
 		)
 	end)
 
-	-- Pass 1: summarize each file in parallel
 	local summaries = {}
 	local pending = #files
 	local has_error = false
 
 	for i, f in ipairs(files) do
-		-- Truncate individual file diffs aggressively for pass 1
-		local file_diff = f.diff
-		if #file_diff > M.config.max_file_chars then
-			file_diff = file_diff:sub(1, M.config.max_file_chars) .. "\n... (truncated)"
-		end
-
-		local prompt = string.format(file_summary_prompt, f.file, file_diff)
+		local prompt = string.format(file_summary_prompt, f.file, f.diff)
 		call_ollama(prompt, model_fast, function(response, err)
 			if has_error then
 				return
@@ -326,7 +337,6 @@ local function two_pass(files, callback)
 			pending = pending - 1
 
 			if pending == 0 then
-				-- Pass 2: synthesize all summaries into a commit message
 				local summary_block = table.concat(summaries, "\n")
 				local synth_prompt = string.format(synthesis_prompt, summary_block)
 				call_ollama(synth_prompt, model_large, callback)
@@ -381,18 +391,27 @@ function M.generate(opts)
 
 	vim.notify("Generating commit message...", vim.log.levels.INFO)
 
-	get_staged_diff(function(files, raw_size)
-		if not files or #files == 0 then
+	get_staged_diff_raw(function(raw_diff)
+		if not raw_diff then
 			vim.schedule(function()
-				vim.notify("No staged changes found (or all files filtered)", vim.log.levels.WARN)
+				vim.notify("No staged changes found", vim.log.levels.WARN)
+			end)
+			return
+		end
+
+		local files = parse_diff_files(raw_diff)
+		local filtered = filter_and_truncate(files)
+
+		if #filtered == 0 then
+			vim.schedule(function()
+				vim.notify("No staged changes found (all files filtered)", vim.log.levels.WARN)
 			end)
 			return
 		end
 
 		vim.schedule(function()
-			local filtered_count = #files
 			vim.notify(
-				string.format("%d file(s) after filtering (raw diff: %s)", filtered_count, _format_bytes(raw_size)),
+				string.format("%d file(s) staged (%s)", #filtered, format_bytes(#raw_diff)),
 				vim.log.levels.INFO
 			)
 		end)
@@ -409,26 +428,12 @@ function M.generate(opts)
 			end
 		end
 
-		-- Route: single-pass for small diffs, two-pass for large ones
-		if raw_size > M.config.two_pass_threshold then
-			two_pass(files, on_done)
+		if #raw_diff > M.config.two_pass_threshold then
+			two_pass(filtered, on_done)
 		else
-			single_pass(files, on_done)
+			single_pass(filtered, on_done)
 		end
 	end)
-end
-
---- Format byte count for display.
----@param bytes number
----@return string
-function _format_bytes(bytes)
-	if bytes < 1024 then
-		return bytes .. "B"
-	elseif bytes < 1024 * 1024 then
-		return string.format("%.1fKB", bytes / 1024)
-	else
-		return string.format("%.1fMB", bytes / 1024 / 1024)
-	end
 end
 
 --- Register the autocommand and buffer-local keymap.

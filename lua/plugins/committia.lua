@@ -10,17 +10,17 @@ return {
 
                 let g:committia_hooks = {}
                 function! g:committia_hooks.edit_open(info)
-                    " Additional settings
-                    setlocal spell
+                " Additional settings
+                setlocal spell
+
+                " NOTE: startinsert removed to avoid conflicting with ai-commit.lua's
+                " changedtick guard. The AI draft will be inserted first, then you can
+                " edit normally.
 
                     " Scroll the diff window from insert mode
-                    " Map <C-u> and <C-d>
+                    " Map <C-n> and <C-p>
                     imap <buffer><C-u> <Plug>(committia-scroll-diff-down-half)
                     imap <buffer><C-d> <Plug>(committia-scroll-diff-up-half)
-
-                    " Scroll the diff window from normal mode
-                    nmap <buffer><C-u> <Plug>(committia-scroll-diff-down-half)
-                    nmap <buffer><C-d> <Plug>(committia-scroll-diff-up-half)
                 endfunction
             ]])
 	end,
