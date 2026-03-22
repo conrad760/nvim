@@ -14,6 +14,7 @@ require("lazy").setup({
 	require("plugins.lualine_nvim"),
 	-- require("plugins.nvim-autopairs"), -- Disabled: using mini.pairs instead
 	require("plugins.neogit"),
+	require("plugins.neojj"),
 	require("plugins.which-key_nvim"),
 	require("plugins.snacks-enhanced"), -- Replaces Telescope with Snacks picker
 	require("plugins.colortheme"), -- current colors
