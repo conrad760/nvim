@@ -36,7 +36,7 @@ return { -- Autocompletion
 			sources = {
 				{ name = "vim-dadbod-completion" },
 				{ name = "buffer" },
-				{ name = "codeium" },
+				-- { name = "codeium" },
 				{ name = "luasnip" },
 				{ name = "nvim_lsp" },
 			},

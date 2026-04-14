@@ -18,11 +18,37 @@ https://youtu.be/c0cuvzK1SDo
 
 return {
   "mfussenegger/nvim-lint",
-  optional = true,
+  event = { "BufReadPre", "BufNewFile" },
   opts = {
+    linters_by_ft = {
+      terraform = { "tflint" },
+      tf = { "tflint" },
+      ["terraform-vars"] = { "tflint" },
+    },
     linters = {
       -- markdownlint-cli2 will use its default config or local .markdownlint.yaml if present
       ["markdownlint-cli2"] = {},
     },
   },
+  config = function(_, opts)
+    local lint = require("lint")
+    lint.linters_by_ft = opts.linters_by_ft or {}
+    for name, linter in pairs(opts.linters or {}) do
+      if type(linter) == "table" and type(lint.linters[name]) == "table" then
+        lint.linters[name] = vim.tbl_deep_extend("force", lint.linters[name], linter)
+      else
+        lint.linters[name] = linter
+      end
+    end
+
+    -- Auto-lint on save and insert leave
+    vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave", "BufReadPost" }, {
+      group = vim.api.nvim_create_augroup("nvim-lint", { clear = true }),
+      callback = function()
+        if vim.opt_local.modifiable:get() then
+          lint.try_lint()
+        end
+      end,
+    })
+  end,
 }

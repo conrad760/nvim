@@ -21,12 +21,6 @@ return { -- LSP Configuration & Plugins
 			},
 		},
 	},
-	opts = {
-		servers = {
-			nixd = {},
-		},
-	},
-
 	config = function()
 		vim.filetype.add({ extension = { templ = "templ" } })
 
@@ -203,7 +197,7 @@ return { -- LSP Configuration & Plugins
 		--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 		-- LSP servers only (not formatters/linters)
 		local servers = {
-			nil_ls = {},
+			terraformls = {},
 			gopls = {
 				settings = {
 					gopls = {
@@ -266,6 +260,7 @@ return { -- LSP Configuration & Plugins
 			"gofumpt",   -- Go formatter
 			"goimports", -- Go imports formatter
 			"revive",    -- Go linter
+			"tflint",    -- Terraform linter
 		}
 
 		-- Ensure the servers and tools above are installed
@@ -293,6 +288,19 @@ return { -- LSP Configuration & Plugins
 					require("lspconfig")[server_name].setup(server)
 				end,
 			},
+		})
+
+		-- Servers installed externally (via Nix), not managed by Mason
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "nix",
+			callback = function()
+				vim.lsp.start({
+					name = "nixd",
+					cmd = { "nixd" },
+					root_dir = vim.fs.dirname(vim.fs.find({ "flake.nix", ".git" }, { upward = true })[1]),
+					capabilities = capabilities,
+				})
+			end,
 		})
 	end,
 }

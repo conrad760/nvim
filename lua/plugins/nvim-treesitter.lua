@@ -20,8 +20,9 @@ return {
 				"bash", "c", "html", "lua", "luadoc", "markdown", "markdown_inline",
 				"vim", "vimdoc", "javascript", "typescript", "tsx", "json", "yaml", "toml",
 				"css", "scss", "python", "rust", "java", "cpp", "cmake", "make",
-				"dockerfile", "git_config", "gitignore", "diff", "regex", "sql",
-				"graphql", "proto", "xml", "norg", "comment", "nix",
+			"dockerfile", "git_config", "gitignore", "diff", "regex", "sql",
+			"graphql", "proto", "xml", "norg", "comment", "nix",
+			"hcl", "terraform", -- Terraform / tfvars
 			},
 			auto_install = false,
 			highlight = {

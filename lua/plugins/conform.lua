@@ -29,7 +29,10 @@ return {
 				go = { "goimports", "golines", "gofumpt" },
 				bash = { "shfmt" },
 				sql = { "sqlfluff" },
-				nix = { "treefmt", "nixfmt", "alejandra", "nixpkgs_fmt", "nil_ls" },
+				nix = { "treefmt", "nixfmt", "alejandra", "nixpkgs_fmt" },
+				terraform = { "terraform_fmt" },
+				tf = { "terraform_fmt" },
+				["terraform-vars"] = { "terraform_fmt" },
 			},
 
 			formatters = {
