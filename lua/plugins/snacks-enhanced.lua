@@ -355,9 +355,13 @@ return {
 		{
 			"<S-l>",
 			function()
-				Snacks.picker.diagnostics()
+				vim.diagnostic.open_float(nil, {
+					scope = "line",
+					focus = false,
+					source = "if_many",
+				})
 			end,
-			desc = "Diagnostics",
+			desc = "Line Diagnostics",
 		},
 
 		-- Other Snacks features
