@@ -26,7 +26,7 @@ return {
 
 			formatters_by_ft = {
 				lua = { "stylua" },
-				go = { "goimports", "golines", "gofumpt" },
+				go = { "goimports", "gci", "golines", "gofumpt" },
 				bash = { "shfmt" },
 				sql = { "sqlfluff" },
 				nix = { "treefmt", "nixfmt", "alejandra", "nixpkgs_fmt" },
@@ -36,6 +36,13 @@ return {
 			},
 
 			formatters = {
+				gci = {
+					-- gci doesn't support stdin; use write + re-read via stdin=false.
+					-- localmodule auto-detects the prefix from go.mod so this
+					-- stays in sync with .golangci.yml without hardcoding.
+					args = { "write", "--section", "standard", "--section", "default", "--section", "localmodule", "$FILENAME" },
+					stdin = false,
+				},
 				sqlfluff = {
 					command = "sqlfluff",
 					args = { "format", "--dialect", "postgres", "-" },

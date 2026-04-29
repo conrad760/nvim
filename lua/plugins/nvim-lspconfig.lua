@@ -208,6 +208,7 @@ return { -- LSP Configuration & Plugins
 						},
 						staticcheck = true,
 						gofumpt = true,
+
 					},
 				},
 			},
@@ -259,6 +260,7 @@ return { -- LSP Configuration & Plugins
 			"golines",   -- Go line length formatter
 			"gofumpt",   -- Go formatter
 			"goimports", -- Go imports formatter
+			"gci",       -- Go import ordering formatter
 			"revive",    -- Go linter
 			"tflint",    -- Terraform linter
 		}

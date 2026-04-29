@@ -40,7 +40,6 @@ require("lazy").setup({
 	require("plugins.mini-pairs"),
 	require("plugins.mini-surround"),
 	require("plugins.diffview_nvim"),
-	require("plugins.neorg"),
 	require("plugins.gen-nvim"),
 	-- require("plugins.obsidian"), -- Disabled
 	require("plugins.nvim-window-picker"),
@@ -63,6 +62,7 @@ require("lazy").setup({
 	require("plugins.virt-column"),
 	-- require("plugins.atac"), -- Disabled
 	require("plugins.opencode"),
+	require("plugins.octo"),
 }, {
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the

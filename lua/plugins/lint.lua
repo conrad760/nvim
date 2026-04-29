@@ -6,6 +6,9 @@ return { -- Linting
 		lint.linters_by_ft = {
 			markdown = { "markdownlint" },
 			go = { "golangcilint" },
+			terraform = { "tflint" },
+			tf = { "tflint" },
+			["terraform-vars"] = { "tflint" },
 		}
 
 		-- To allow other plugins to add linters to require('lint').linters_by_ft,
