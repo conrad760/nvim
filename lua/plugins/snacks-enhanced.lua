@@ -352,17 +352,6 @@ return {
 			end,
 			desc = "Git Logs",
 		},
-		{
-			"<S-l>",
-			function()
-				vim.diagnostic.open_float(nil, {
-					scope = "line",
-					focus = false,
-					source = "if_many",
-				})
-			end,
-			desc = "Line Diagnostics",
-		},
 
 		-- Other Snacks features
 		{

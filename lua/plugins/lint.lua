@@ -10,6 +10,7 @@ return { -- Linting
 			tf = { "tflint" },
 			["terraform-vars"] = { "tflint" },
 		}
+		lint.linters.golangcilint.ignore_exitcode = true
 
 		-- To allow other plugins to add linters to require('lint').linters_by_ft,
 		-- instead set linters_by_ft like this:
@@ -45,7 +46,7 @@ return { -- Linting
 		-- Create autocommand which carries out the actual linting
 		-- on the specified events.
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
-		vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+		vim.api.nvim_create_autocmd("BufWritePost", {
 			group = lint_augroup,
 			callback = function()
 				require("lint").try_lint()

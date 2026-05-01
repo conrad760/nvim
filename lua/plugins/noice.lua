@@ -37,7 +37,7 @@ return {
 			lsp = {
 				message = {
 					-- Messages shown by lsp servers
-					enabled = true,
+					enabled = false,
 					view = "mini",
 				},
 			},

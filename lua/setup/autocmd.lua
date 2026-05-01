@@ -13,17 +13,6 @@
 --   { "🭼", "FloatBorder" },
 --   { "▏", "FloatBorder" },
 -- }
--- Show full diagnostic message in a float when cursor rests on a line
-vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-	group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
-	callback = function()
-		vim.diagnostic.open_float(nil, {
-			focus = false,
-			border = "rounded",
-		})
-	end,
-})
-
 --- Remove all trailing whitespace on save
 local TrimWhiteSpaceGrp = vim.api.nvim_create_augroup("TrimWhiteSpaceGrp", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePre", {

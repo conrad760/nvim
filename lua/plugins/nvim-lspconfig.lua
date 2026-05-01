@@ -99,32 +99,33 @@ return { -- LSP Configuration & Plugins
 				-- or a suggestion from your LSP for this to activate.
 				map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
-				-- Opens a popup that displays documentation about the word under your cursor
-				--  See `:help K` for why this keymap.
-				map("K", function()
+				-- Opens a popup that displays documentation about the word under your cursor.
+				map("<S-l>", function()
 					local params = vim.lsp.util.make_position_params()
-					
+
 					-- Get references first
 					vim.lsp.buf_request(0, "textDocument/references", params, function(err, result)
 						local ref_count = 0
 						if not err and result then
 							ref_count = #result
 						end
-						
+
 						-- Then get hover info and prepend reference count
 						vim.lsp.buf_request(0, "textDocument/hover", params, function(hover_err, hover_result)
 							if hover_err or not hover_result or not hover_result.contents then
-								vim.notify("No hover information available", vim.log.levels.WARN)
 								return
 							end
-							
+
 							-- Convert hover contents to markdown lines
 							local markdown_lines = vim.lsp.util.convert_input_to_markdown_lines(hover_result.contents)
-							
+							if vim.tbl_isempty(markdown_lines) then
+								return
+							end
+
 							-- Prepend reference count as the first line
 							table.insert(markdown_lines, 1, string.format("**References: %d**", ref_count))
 							table.insert(markdown_lines, 2, "")
-							
+
 							-- Display in floating window
 							vim.lsp.util.open_floating_preview(markdown_lines, "markdown", {
 								border = "rounded",
